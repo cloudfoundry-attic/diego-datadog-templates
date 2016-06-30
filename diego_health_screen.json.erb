@@ -1512,7 +1512,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "avg:datadog.nozzle.rep.GardenContainerCreationDuration{deployment:<%= metron_agent_diego_deployment %>} by {ip} / 1000000000",
+            "q": "avg:datadog.nozzle.rep.GardenContainerCreationDuration{deployment:<%= metron_agent_diego_deployment %>} by {index,ip,job} / 1000000000",
             "type": "line"
           }
         ]
