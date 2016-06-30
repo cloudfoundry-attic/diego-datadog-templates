@@ -1,0 +1,42 @@
+{
+  "title": "<%= environment %> Volman Health",
+  "description": "<%= environment %> Volman Health",
+  "graphs":[
+    {
+      "title": "Cell: Volman Mount Duration (seconds)",
+      "definition":{
+        "viz": "timeseries",
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.rep.VolmanMountDuration{deployment:<%= diego_deployment %>} by {ip} / 1000000000",
+            "type": "line"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Cell: Volman Unmount Duration (seconds)",
+      "definition":{
+        "viz": "timeseries",
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.rep.VolmanUnmountDuration{deployment:<%= diego_deployment %>} by {ip} / 1000000000",
+            "type": "line"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Cell: Volman Mount Errors (per hour)",
+      "definition":{
+        "viz": "timeseries",
+        "requests": [
+          {
+            "q": "per_hour(avg:datadog.nozzle.rep.VolmanMountErrors{deployment:<%= diego_deployment %>} by {ip})",
+            "type": "line"
+          }
+        ]
+      }
+    }
+  ]
+}
