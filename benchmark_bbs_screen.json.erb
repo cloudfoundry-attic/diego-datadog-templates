@@ -1,0 +1,104 @@
+{
+  "description": "Benchmark BBS",
+  "graphs": [
+    {
+      "definition": {
+        "requests": [
+          {
+            "q": "benchmarks.<%= environment %>.ConvergenceGathering{$scope}"
+          }
+        ]
+      },
+      "title": "benchmarks.<%= environment %>.ConvergenceGathering"
+    },
+    {
+      "definition": {
+        "requests": [
+          {
+            "q": "benchmarks.<%= environment %>.FetchActualLRPsAndSchedulingInfos{$scope}"
+          }
+        ]
+      },
+      "title": "benchmarks.<%= environment %>.FetchActualLRPsAndSchedulingInfos"
+    },
+    {
+      "definition": {
+        "requests": [
+          {
+            "q": "benchmarks.<%= environment %>.NsyncBulkerFetching{$scope}"
+          }
+        ]
+      },
+      "title": "benchmarks.<%= environment %>.NsyncBulkerFetching"
+    },
+    {
+      "definition": {
+        "requests": [
+          {
+            "q": "benchmarks.<%= environment %>.RepBulkFetching{$scope}"
+          }
+        ]
+      },
+      "title": "benchmarks.<%= environment %>.RepBulkFetching"
+    },
+    {
+      "definition": {
+        "requests": [
+          {
+            "q": "benchmarks.<%= environment %>.RepBulkLoop{$scope}"
+          }
+        ]
+      },
+      "title": "benchmarks.<%= environment %>.RepBulkLoop"
+    },
+    {
+      "definition": {
+        "requests": [
+          {
+            "q": "benchmarks.<%= environment %>.RepClaimActualLRP{$scope}"
+          }
+        ]
+      },
+      "title": "benchmarks.<%= environment %>.RepClaimActualLRP"
+    },
+    {
+      "definition": {
+        "requests": [
+          {
+            "q": "benchmarks.<%= environment %>.RepStartActualLRP{$scope}"
+          }
+        ]
+      },
+      "title": "benchmarks.<%= environment %>.RepStartActualLRP"
+    },
+    {
+      "definition": {
+        "requests": [
+          {
+            "q": "benchmarks.<%= environment %>.failed_actual_requests{$scope}"
+          }
+        ]
+      },
+      "title": "benchmarks.<%= environment %>.failed_actual_requests"
+    },
+    {
+      "definition": {
+        "requests": [
+          {
+            "q": "benchmarks.<%= environment %>.failed_desired_requests{$scope}"
+          }
+        ]
+      },
+      "title": "benchmarks.<%= environment %>.failed_desired_requests"
+    }
+  ],
+  "read_only": false,
+  "template_variables": [
+    {
+      "default": "*",
+      "prefix": null,
+      "name": "scope"
+    }
+  ],
+  "title": "<%= environment %> Benchmark BBS"
+}
