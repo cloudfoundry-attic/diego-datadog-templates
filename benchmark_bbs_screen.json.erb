@@ -1,104 +1,265 @@
 {
-  "description": "Benchmark BBS",
-  "graphs": [
-    {
-      "definition": {
-        "requests": [
-          {
-            "q": "benchmarks.<%= environment %>.ConvergenceGathering{$scope}"
-          }
-        ]
-      },
-      "title": "benchmarks.<%= environment %>.ConvergenceGathering"
-    },
-    {
-      "definition": {
-        "requests": [
-          {
-            "q": "benchmarks.<%= environment %>.FetchActualLRPsAndSchedulingInfos{$scope}"
-          }
-        ]
-      },
-      "title": "benchmarks.<%= environment %>.FetchActualLRPsAndSchedulingInfos"
-    },
-    {
-      "definition": {
-        "requests": [
-          {
-            "q": "benchmarks.<%= environment %>.NsyncBulkerFetching{$scope}"
-          }
-        ]
-      },
-      "title": "benchmarks.<%= environment %>.NsyncBulkerFetching"
-    },
-    {
-      "definition": {
-        "requests": [
-          {
-            "q": "benchmarks.<%= environment %>.RepBulkFetching{$scope}"
-          }
-        ]
-      },
-      "title": "benchmarks.<%= environment %>.RepBulkFetching"
-    },
-    {
-      "definition": {
-        "requests": [
-          {
-            "q": "benchmarks.<%= environment %>.RepBulkLoop{$scope}"
-          }
-        ]
-      },
-      "title": "benchmarks.<%= environment %>.RepBulkLoop"
-    },
-    {
-      "definition": {
-        "requests": [
-          {
-            "q": "benchmarks.<%= environment %>.RepClaimActualLRP{$scope}"
-          }
-        ]
-      },
-      "title": "benchmarks.<%= environment %>.RepClaimActualLRP"
-    },
-    {
-      "definition": {
-        "requests": [
-          {
-            "q": "benchmarks.<%= environment %>.RepStartActualLRP{$scope}"
-          }
-        ]
-      },
-      "title": "benchmarks.<%= environment %>.RepStartActualLRP"
-    },
-    {
-      "definition": {
-        "requests": [
-          {
-            "q": "benchmarks.<%= environment %>.failed_actual_requests{$scope}"
-          }
-        ]
-      },
-      "title": "benchmarks.<%= environment %>.failed_actual_requests"
-    },
-    {
-      "definition": {
-        "requests": [
-          {
-            "q": "benchmarks.<%= environment %>.failed_desired_requests{$scope}"
-          }
-        ]
-      },
-      "title": "benchmarks.<%= environment %>.failed_desired_requests"
-    }
-  ],
+  "board_bgtype": "board_graph",
+  "board_title": "<%= environment %> Benchmark BBS",
+  "height": 85,
+  "original_title": "",
   "read_only": false,
+  "shared": false,
   "template_variables": [
+
+  ],
+  "title_edited": false,
+  "widgets": [
     {
-      "default": "*",
-      "prefix": null,
-      "name": "scope"
+      "board_id": 98840,
+      "title_size": 16,
+      "title": true,
+      "title_align": "left",
+      "title_text": "",
+      "height": 13,
+      "tile_def": {
+        "viz": "timeseries",
+        "requests": [
+          {
+            "q": "avg:benchmarks.<%= environment %>.ConvergenceGathering{*}",
+            "conditional_formats": [
+
+            ],
+            "type": "line"
+          }
+        ]
+      },
+      "width": 46,
+      "timeframe": "1d",
+      "y": 1,
+      "x": 0,
+      "legend_size": "0",
+      "type": "timeseries",
+      "legend": false
+    },
+    {
+      "board_id": 98840,
+      "title_size": 16,
+      "title": true,
+      "title_align": "left",
+      "title_text": "",
+      "height": 13,
+      "tile_def": {
+        "viz": "timeseries",
+        "requests": [
+          {
+            "q": "avg:benchmarks.<%= environment %>.FetchActualLRPsAndSchedulingInfos{*}",
+            "conditional_formats": [
+
+            ],
+            "type": "line"
+          }
+        ]
+      },
+      "width": 44,
+      "timeframe": "1d",
+      "y": 1,
+      "x": 47,
+      "legend_size": "0",
+      "type": "timeseries",
+      "legend": false
+    },
+    {
+      "board_id": 98840,
+      "title_size": 16,
+      "title": true,
+      "title_align": "left",
+      "title_text": "",
+      "height": 13,
+      "tile_def": {
+        "viz": "timeseries",
+        "requests": [
+          {
+            "q": "avg:benchmarks.<%= environment %>.NsyncBulkerFetching{*}",
+            "aggregator": "avg",
+            "conditional_formats": [
+
+            ],
+            "type": "line"
+          }
+        ]
+      },
+      "width": 46,
+      "timeframe": "1d",
+      "y": 17,
+      "x": 0,
+      "legend_size": "0",
+      "type": "timeseries",
+      "legend": false
+    },
+    {
+      "board_id": 98840,
+      "title_size": 16,
+      "title": true,
+      "title_align": "left",
+      "title_text": "",
+      "height": 13,
+      "tile_def": {
+        "viz": "timeseries",
+        "requests": [
+          {
+            "q": "avg:benchmarks.<%= environment %>.RepBulkFetching{*}",
+            "aggregator": "avg",
+            "conditional_formats": [
+
+            ],
+            "type": "line"
+          }
+        ]
+      },
+      "width": 44,
+      "timeframe": "1d",
+      "y": 17,
+      "x": 47,
+      "legend_size": "0",
+      "type": "timeseries",
+      "legend": false
+    },
+    {
+      "board_id": 98840,
+      "title_size": 16,
+      "title": true,
+      "title_align": "left",
+      "title_text": "",
+      "height": 13,
+      "tile_def": {
+        "viz": "timeseries",
+        "requests": [
+          {
+            "q": "avg:benchmarks.<%= environment %>.RepBulkLoop{*}",
+            "aggregator": "avg",
+            "conditional_formats": [
+
+            ],
+            "type": "line"
+          }
+        ]
+      },
+      "width": 46,
+      "timeframe": "1d",
+      "y": 33,
+      "x": 0,
+      "legend_size": "0",
+      "type": "timeseries",
+      "legend": false
+    },
+    {
+      "board_id": 98840,
+      "title_size": 16,
+      "title": true,
+      "title_align": "left",
+      "title_text": "",
+      "height": 13,
+      "tile_def": {
+        "viz": "timeseries",
+        "requests": [
+          {
+            "q": "avg:benchmarks.<%= environment %>.RepClaimActualLRP{*}",
+            "aggregator": "avg",
+            "conditional_formats": [
+
+            ],
+            "type": "line"
+          }
+        ]
+      },
+      "width": 44,
+      "timeframe": "1d",
+      "y": 33,
+      "x": 47,
+      "legend_size": "0",
+      "type": "timeseries",
+      "legend": false
+    },
+    {
+      "board_id": 98840,
+      "title_size": 16,
+      "title": true,
+      "title_align": "left",
+      "title_text": "",
+      "height": 13,
+      "tile_def": {
+        "viz": "timeseries",
+        "requests": [
+          {
+            "q": "avg:benchmarks.<%= environment %>.RepStartActualLRP{*}",
+            "aggregator": "avg",
+            "conditional_formats": [
+
+            ],
+            "type": "line"
+          }
+        ]
+      },
+      "width": 46,
+      "timeframe": "1d",
+      "y": 49,
+      "x": 0,
+      "legend_size": "0",
+      "type": "timeseries",
+      "legend": false
+    },
+    {
+      "board_id": 98840,
+      "title_size": 16,
+      "title": true,
+      "title_align": "left",
+      "title_text": "",
+      "height": 13,
+      "tile_def": {
+        "viz": "timeseries",
+        "requests": [
+          {
+            "q": "avg:benchmarks.<%= environment %>.failed_actual_requests{*}",
+            "aggregator": "avg",
+            "conditional_formats": [
+
+            ],
+            "type": "line"
+          }
+        ]
+      },
+      "width": 44,
+      "timeframe": "1d",
+      "y": 49,
+      "x": 47,
+      "legend_size": "0",
+      "type": "timeseries",
+      "legend": false
+    },
+    {
+      "board_id": 98840,
+      "title_size": 16,
+      "title": true,
+      "title_align": "left",
+      "title_text": "",
+      "height": 13,
+      "tile_def": {
+        "viz": "timeseries",
+        "requests": [
+          {
+            "q": "avg:benchmarks.<%= environment %>.failed_desired_requests{*}",
+            "aggregator": "avg",
+            "conditional_formats": [
+
+            ],
+            "type": "line"
+          }
+        ]
+      },
+      "width": 46,
+      "timeframe": "1d",
+      "y": 65,
+      "x": 0,
+      "legend_size": "0",
+      "type": "timeseries",
+      "legend": false
     }
   ],
-  "title": "<%= environment %> Benchmark BBS"
+  "width": "100%"
 }
