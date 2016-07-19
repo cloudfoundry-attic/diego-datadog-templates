@@ -1,3 +1,7 @@
+<%
+    bosh_event_query_string = "\\\"Begin update deployment for '#{diego_deployment}' against Director\\\" OR \\\"Finish update deployment for '#{diego_deployment}' against Director\\\" OR \\\"Error during update deployment for '#{diego_deployment}' against Director\\\" OR \\\"Begin update deployment for '#{deployment}' against Director\\\" OR \\\"Finish update deployment for '#{deployment}' against Director\\\" OR \\\"Error during update deployment for '#{deployment}' against Director\\\""
+%>
+
 {
   "title": "<%= environment %> Diego Health",
   "description": "<%= environment %> Diego Health",
@@ -24,22 +28,7 @@
         ],
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -63,22 +52,7 @@
         ],
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -94,22 +68,7 @@
         ],
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -125,22 +84,7 @@
         ],
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -156,22 +100,7 @@
         ],
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -187,22 +116,7 @@
         ],
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -219,22 +133,7 @@
         ],
         "events":[
           {
-           "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-           "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-           "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-           "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-           "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-           "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -251,22 +150,7 @@
         ],
         "events":[
           {
-           "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-           "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-           "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-           "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-           "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-           "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -283,22 +167,7 @@
         ],
         "events":[
           {
-           "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-           "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-           "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-           "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-           "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-           "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -315,22 +184,7 @@
         ],
         "events":[
           {
-           "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-           "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-           "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-           "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-           "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-           "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -347,21 +201,7 @@
         ],
         "events":[
           {
-           "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-           "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-           "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-           "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-           "q": "tags:deployment:<%= deployment %> finished deploying."
-          }, {
-           "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -378,22 +218,7 @@
         ],
         "events":[
           {
-           "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-           "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-           "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-           "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-           "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-           "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -410,21 +235,7 @@
         ],
         "events":[
           {
-           "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-           "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-           "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-           "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-           "q": "tags:deployment:<%= deployment %> finished deploying."
-          }, {
-           "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -440,22 +251,7 @@
         ],
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -471,22 +267,7 @@
         ],
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -503,22 +284,7 @@
         "viz": "timeseries",
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -532,22 +298,7 @@
         "viz": "timeseries",
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -568,22 +319,7 @@
         "viz": "timeseries",
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -599,22 +335,7 @@
         "viz": "timeseries",
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -642,22 +363,7 @@
         "viz": "timeseries",
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -673,22 +379,7 @@
         "viz": "timeseries",
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -717,22 +408,7 @@
         "viz": "timeseries",
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -763,22 +439,7 @@
         "requests": <%= requests.to_json %>,
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -795,22 +456,7 @@
         ],
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -825,22 +471,7 @@
         ],
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -858,22 +489,7 @@
         ],
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -891,22 +507,7 @@
         ],
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -927,22 +528,7 @@
         ],
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ],
         "markers": [
@@ -973,22 +559,7 @@
         ],
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -1009,22 +580,7 @@
         ],
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -1045,22 +601,7 @@
         ],
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ],
         "markers": [
@@ -1091,22 +632,7 @@
         ],
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ],
         "markers": [
@@ -1137,22 +663,7 @@
         ],
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ],
         "markers": [
@@ -1183,22 +694,7 @@
         ],
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ],
         "markers": [
@@ -1224,22 +720,7 @@
         ],
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -1258,22 +739,7 @@
         ],
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -1290,22 +756,7 @@
         "viz": "timeseries",
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -1322,22 +773,7 @@
         "viz": "timeseries",
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -1354,22 +790,7 @@
         "viz": "timeseries",
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -1388,22 +809,7 @@
         ],
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -1422,22 +828,7 @@
         ],
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -1454,22 +845,7 @@
         "viz": "timeseries",
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -1486,22 +862,7 @@
         "viz": "timeseries",
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
@@ -1529,22 +890,7 @@
         ],
         "events":[
           {
-            "q": "tags:deployment:<%= diego_deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= diego_deployment %> failed deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> started deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> finished deploying."
-          },
-          {
-            "q": "tags:deployment:<%= deployment %> failed deploying."
+            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
