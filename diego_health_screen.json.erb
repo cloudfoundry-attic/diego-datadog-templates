@@ -44,6 +44,9 @@
             "q": "datadog.nozzle.bbs.LRPsClaimed{deployment: <%= metron_agent_diego_deployment %>}"
           },
           {
+            "q": "avg:datadog.nozzle.bbs.LRPsUnclaimed{deployment: <%= metron_agent_diego_deployment %>}"
+          },
+          {
             "q": "datadog.nozzle.bbs.LRPsRunning{deployment: <%= metron_agent_diego_deployment %>}"
           },
           {
@@ -58,12 +61,14 @@
       }
     },
     {
-      "title": "Cell: Missing LRPs",
+      "title": "Cell: Missing and Extra LRPs",
       "definition":{
         "requests": [
           {
-            "q": "datadog.nozzle.bbs.LRPsMissing{deployment: <%= metron_agent_diego_deployment %>}",
-            "type": "line"
+            "q": "datadog.nozzle.bbs.LRPsMissing{deployment: <%= metron_agent_diego_deployment %>}"
+          },
+          {
+            "q": "datadog.nozzle.bbs.LRPsExtra{deployment: <%= metron_agent_diego_deployment %>}"
           }
         ],
         "events":[
