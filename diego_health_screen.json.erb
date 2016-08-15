@@ -110,7 +110,7 @@
       "definition":{
         "requests":[
           {
-            "q": "sum:datadog.nozzle.rep.UnhealthyCell{deployment:<%= metron_agent_diego_deployment %>} by {job,index}",
+            "q": "sum:datadog.nozzle.rep.UnhealthyCell{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
             "type": "bars"
           }
         ],
@@ -127,7 +127,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "datadog.nozzle.bbs.BBSMasterElected{deployment:<%= metron_agent_diego_deployment %>}",
+            "q": "avg:datadog.nozzle.bbs.BBSMasterElected{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
             "type": "bars"
           }
         ],
@@ -144,7 +144,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "max:datadog.nozzle.bbs.MigrationDuration{deployment:<%= metron_agent_diego_deployment %>}/1000000000",
+            "q": "max:datadog.nozzle.bbs.MigrationDuration{deployment:<%= metron_agent_diego_deployment %>}by {job,index,ip}/1000000000",
             "type": "bars"
           }
         ],
@@ -161,7 +161,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "max:datadog.nozzle.bbs.EncryptionDuration{deployment:<%= metron_agent_diego_deployment %>}/1000000000",
+            "q": "max:datadog.nozzle.bbs.EncryptionDuration{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}/1000000000",
             "type": "bars"
           }
         ],
@@ -178,7 +178,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "datadog.nozzle.auctioneer.RequestCount{deployment:<%= metron_agent_diego_deployment %>}",
+            "q": "max:datadog.nozzle.auctioneer.RequestCount{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
             "type": "line"
           }
         ],
@@ -195,7 +195,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "max:datadog.nozzle.auctioneer.RequestLatency{deployment:<%= metron_agent_diego_deployment %>}/1000000000",
+            "q": "max:datadog.nozzle.auctioneer.RequestLatency{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}/1000000000",
             "type": "line"
           }
         ],
@@ -212,7 +212,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "datadog.nozzle.bbs.RequestCount{deployment:<%= metron_agent_diego_deployment %>}",
+            "q": "datadog.nozzle.bbs.RequestCount{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
             "type": "line"
           }
         ],
@@ -229,7 +229,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "max:datadog.nozzle.bbs.RequestLatency{deployment:<%= metron_agent_diego_deployment %>}/1000000000",
+            "q": "max:datadog.nozzle.bbs.RequestLatency{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}/1000000000",
             "type": "line"
           }
         ],
@@ -766,7 +766,7 @@
       "definition":{
         "requests": [
           {
-            "q": "max:datadog.nozzle.rep.RepBulkSyncDuration{deployment:<%= metron_agent_diego_deployment %>}/1000000000",
+            "q": "max:datadog.nozzle.rep.RepBulkSyncDuration{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip} /1000000000",
             "type": "line"
           }
         ],
@@ -783,7 +783,7 @@
       "definition":{
         "requests": [
           {
-            "q": "max:datadog.nozzle.rep.StalledGardenDuration{deployment:<%= metron_agent_diego_deployment %>}/1000000000",
+            "q": "max:datadog.nozzle.rep.StalledGardenDuration{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip} /1000000000",
             "type": "line"
           }
         ],
