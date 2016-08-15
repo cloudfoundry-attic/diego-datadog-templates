@@ -421,7 +421,7 @@
     <%
     [
       {:prefix => "Bridge", :processes => ["file_server", "nsync_bulker", "nsync_listener", "stager", "tps_listener", "tps_watcher"]},
-      {:prefix => "Non-Bridge", :processes => ["auctioneer", "bbs", "converger", "garden_linux", "receptor", "rep", "route_emitter", "ssh_proxy"]},
+      {:prefix => "Non-Bridge", :processes => ["auctioneer", "bbs", "garden_linux", "receptor", "rep", "route_emitter", "ssh_proxy"]},
     ].each do |group|
     [
       {:title => "Go: # Goroutines", :metric => "numGoRoutines"},
