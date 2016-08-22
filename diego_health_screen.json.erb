@@ -885,6 +885,54 @@
       }
     },
     {
+      "title": "Cell: Garden Container Creation Succeeded Duration (seconds)",
+      "definition":{
+        "viz": "timeseries",
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.rep.GardenContainerCreationSucceededDuration{deployment:<%= metron_agent_diego_deployment %>} by {index,ip,job} / 1000000000",
+            "type": "line"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Cell: Garden Container Creation Failed Duration (seconds)",
+      "definition":{
+        "viz": "timeseries",
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.rep.GardenContainerCreationFailedDuration{deployment:<%= metron_agent_diego_deployment %>} by {index,ip,job} / 1000000000",
+            "type": "line"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Cell: Garden Container Destruction Succeeded Duration (seconds)",
+      "definition":{
+        "viz": "timeseries",
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.rep.GardenContainerDestructionSucceededDuration{deployment:<%= metron_agent_diego_deployment %>} by {index,ip,job} / 1000000000",
+            "type": "line"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Cell: Garden Container Destruction Failed Duration (seconds)",
+      "definition":{
+        "viz": "timeseries",
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.rep.GardenContainerDestructionFailedDuration{deployment:<%= metron_agent_diego_deployment %>} by {index,ip,job} / 1000000000",
+            "type": "line"
+          }
+        ]
+      }
+    },
+    {
       "title": "Converger: Orphaned RunInfos",
       "definition":{
         "requests": [
