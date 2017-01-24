@@ -21,7 +21,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "avg:benchmarks.<%= environment %>.ConvergenceGathering{*}",
+            "q": "max:benchmarks.<%= environment %>.ConvergenceGathering{*}.rollup(max)",
             "conditional_formats": [
 
             ],
@@ -48,7 +48,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "avg:benchmarks.<%= environment %>.FetchActualLRPsAndSchedulingInfos{*}",
+            "q": "max:benchmarks.<%= environment %>.FetchActualLRPsAndSchedulingInfos{*}.rollup(max)",
             "conditional_formats": [
 
             ],
@@ -75,7 +75,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "avg:benchmarks.<%= environment %>.NsyncBulkerFetching{*}",
+            "q": "max:benchmarks.<%= environment %>.NsyncBulkerFetching{*}.rollup(max)",
             "aggregator": "avg",
             "conditional_formats": [
 
@@ -103,7 +103,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "avg:benchmarks.<%= environment %>.RepBulkFetching{*}",
+            "q": "max:benchmarks.<%= environment %>.RepBulkFetching{*}.rollup(max)",
             "aggregator": "avg",
             "conditional_formats": [
 
@@ -131,7 +131,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "avg:benchmarks.<%= environment %>.RepBulkLoop{*}",
+            "q": "max:benchmarks.<%= environment %>.RepBulkLoop{*}.rollup(max)",
             "aggregator": "avg",
             "conditional_formats": [
 
@@ -159,7 +159,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "avg:benchmarks.<%= environment %>.RepClaimActualLRP{*}",
+            "q": "max:benchmarks.<%= environment %>.RepClaimActualLRP{*}.rollup(max)",
             "aggregator": "avg",
             "conditional_formats": [
 
@@ -187,7 +187,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "avg:benchmarks.<%= environment %>.RepStartActualLRP{*}",
+            "q": "max:benchmarks.<%= environment %>.RepStartActualLRP{*}.rollup(max)",
             "aggregator": "avg",
             "conditional_formats": [
 
@@ -215,7 +215,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "avg:benchmarks.<%= environment %>.failed_actual_requests{*}",
+            "q": "max:benchmarks.<%= environment %>.failed_actual_requests{*}.rollup(max)",
             "aggregator": "avg",
             "conditional_formats": [
 
@@ -243,7 +243,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "avg:benchmarks.<%= environment %>.failed_desired_requests{*}",
+            "q": "max:benchmarks.<%= environment %>.failed_desired_requests{*}.rollup(max)",
             "aggregator": "avg",
             "conditional_formats": [
 
