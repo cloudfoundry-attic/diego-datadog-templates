@@ -1,0 +1,151 @@
+{
+  "description": "created by cf-diego+datadog@pivotal.io",
+  "graphs": [
+    {
+      "definition": {
+        "autoscale": true,
+        "requests": [
+          {
+            "conditional_formats": [
+
+            ],
+            "q": "max:benchmarks.<%= environment %>.ConvergenceGathering{*}.rollup(max)",
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "benchmarks.<%= environment %>.ConvergenceGathering"
+    },
+    {
+      "definition": {
+        "autoscale": true,
+        "requests": [
+          {
+            "conditional_formats": [
+
+            ],
+            "q": "max:benchmarks.<%= environment %>.FetchActualLRPsAndSchedulingInfos{*}.rollup(max)",
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "benchmarks.<%= environment %>.FetchActualLRPsAndSchedulingInfos"
+    },
+    {
+      "definition": {
+        "autoscale": true,
+        "requests": [
+          {
+            "conditional_formats": [
+
+            ],
+            "q": "max:benchmarks.<%= environment %>.NsyncBulkerFetching{*}.rollup(max)",
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "benchmarks.<%= environment %>.NsyncBulkerFetching"
+    },
+    {
+      "definition": {
+        "autoscale": true,
+        "requests": [
+          {
+            "conditional_formats": [
+
+            ],
+            "q": "max:benchmarks.<%= environment %>.RepBulkFetching{*}.rollup(max)",
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "benchmarks.<%= environment %>.RepBulkFetching"
+    },
+    {
+      "definition": {
+        "autoscale": true,
+        "requests": [
+          {
+            "conditional_formats": [
+
+            ],
+            "q": "max:benchmarks.<%= environment %>.RepBulkLoop{*}.rollup(max)",
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "benchmarks.<%= environment %>.RepBulkLoop"
+    },
+    {
+      "definition": {
+        "autoscale": true,
+        "requests": [
+          {
+            "conditional_formats": [
+
+            ],
+            "q": "max:benchmarks.<%= environment %>.RepClaimActualLRP{*}.rollup(max)",
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "benchmarks.<%= environment %>.RepClaimActualLRP"
+    },
+    {
+      "definition": {
+        "autoscale": true,
+        "requests": [
+          {
+            "conditional_formats": [
+
+            ],
+            "q": "max:benchmarks.<%= environment %>.RepStartActualLRP{*}.rollup(max)",
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "benchmarks.<%= environment %>.RepStartActualLRP"
+    },
+    {
+      "definition": {
+        "autoscale": true,
+        "requests": [
+          {
+            "conditional_formats": [
+
+            ],
+            "q": "max:benchmarks.<%= environment %>.failed_actual_requests{*}.rollup(max)",
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "benchmarks.<%= environment %>.failed_actual_requests"
+    },
+    {
+      "definition": {
+        "autoscale": true,
+        "requests": [
+          {
+            "conditional_formats": [
+
+            ],
+            "q": "max:benchmarks.<%= environment %>.failed_desired_requests{*}.rollup(max)",
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "benchmarks.<%= environment %>.failed_desired_requests"
+    }
+  ],
+  "read_only": false,
+  "title": "<%= environment %> Diego Benchmark BBS timeboard"
+}
