@@ -246,6 +246,51 @@
       }
     },
     {
+      "title": "Locket: Locks Expired",
+      "definition":{
+        "requests":[
+          {
+            "q": "avg:datadog.nozzle.locket.LocksExpired{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Locket: Active Presences",
+      "definition":{
+        "requests":[
+          {
+            "q": "avg:datadog.nozzle.locket.ActivePresences{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Locket: Active Locks",
+      "definition":{
+        "requests":[
+          {
+            "q": "avg:datadog.nozzle.locket.ActiveLocks{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
       "title": "Canaries",
       "definition":{
         "requests":[
