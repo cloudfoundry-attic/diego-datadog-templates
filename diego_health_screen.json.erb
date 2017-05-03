@@ -776,6 +776,38 @@
       }
     },
     {
+      "title": "Local Route Emitter: Total HTTP Routes",
+      "definition":{
+        "requests":[
+          {
+            "q": "(min:datadog.nozzle.route_emitter.HTTPRouteCount{deployment:<%= metron_agent_diego_deployment %>} by {ip})",
+            "type": "bars"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Local Route Emitter: Total TCP Routes",
+      "definition":{
+        "requests":[
+          {
+            "q": "(min:datadog.nozzle.route_emitter.TCPRouteCount{deployment:<%= metron_agent_diego_deployment %>} by {ip})",
+            "type": "bars"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
       "title": "Route Emitter: Incremental Updates (per second)",
       "definition":{
           "viz": "timeseries",
