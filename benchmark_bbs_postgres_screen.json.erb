@@ -1,6 +1,6 @@
 {
   "board_bgtype": "board_graph",
-  "board_title": "<%= environment %> Benchmark BBS Screenboard",
+  "board_title": "<%= environment + "_postgres" %> Benchmark BBS Screenboard",
   "height": 85,
   "original_title": "",
   "read_only": false,
@@ -21,7 +21,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "max:benchmarks.<%= environment %>.ConvergenceGathering{*}.rollup(max)",
+            "q": "max:benchmarks.<%= environment + "_postgres" %>.ConvergenceGathering{*}.rollup(max)",
             "conditional_formats": [
 
             ],
@@ -48,7 +48,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "max:benchmarks.<%= environment %>.FetchActualLRPsAndSchedulingInfos{*}.rollup(max)",
+            "q": "max:benchmarks.<%= environment + "_postgres" %>.FetchActualLRPsAndSchedulingInfos{*}.rollup(max)",
             "conditional_formats": [
 
             ],
@@ -75,7 +75,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "max:benchmarks.<%= environment %>.NsyncBulkerFetching{*}.rollup(max)",
+            "q": "max:benchmarks.<%= environment + "_postgres" %>.NsyncBulkerFetching{*}.rollup(max)",
             "aggregator": "avg",
             "conditional_formats": [
 
@@ -103,7 +103,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "max:benchmarks.<%= environment %>.RepBulkFetching{*}.rollup(max)",
+            "q": "max:benchmarks.<%= environment + "_postgres" %>.RepBulkFetching{*}.rollup(max)",
             "aggregator": "avg",
             "conditional_formats": [
 
@@ -131,7 +131,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "max:benchmarks.<%= environment %>.RepBulkLoop{*}.rollup(max)",
+            "q": "max:benchmarks.<%= environment + "_postgres" %>.RepBulkLoop{*}.rollup(max)",
             "aggregator": "avg",
             "conditional_formats": [
 
@@ -159,7 +159,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "max:benchmarks.<%= environment %>.RepClaimActualLRP{*}.rollup(max)",
+            "q": "max:benchmarks.<%= environment + "_postgres" %>.RepClaimActualLRP{*}.rollup(max)",
             "aggregator": "avg",
             "conditional_formats": [
 
@@ -187,7 +187,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "max:benchmarks.<%= environment %>.RepStartActualLRP{*}.rollup(max)",
+            "q": "max:benchmarks.<%= environment + "_postgres" %>.RepStartActualLRP{*}.rollup(max)",
             "aggregator": "avg",
             "conditional_formats": [
 
@@ -215,7 +215,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "max:benchmarks.<%= environment %>.failed_actual_requests{*}.rollup(max)",
+            "q": "max:benchmarks.<%= environment + "_postgres" %>.failed_actual_requests{*}.rollup(max)",
             "aggregator": "avg",
             "conditional_formats": [
 
@@ -243,7 +243,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "max:benchmarks.<%= environment %>.failed_desired_requests{*}.rollup(max)",
+            "q": "max:benchmarks.<%= environment + "_postgres" %>.failed_desired_requests{*}.rollup(max)",
             "aggregator": "avg",
             "conditional_formats": [
 
