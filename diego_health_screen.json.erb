@@ -1024,6 +1024,22 @@
           }
         ]
       }
+    },
+    {
+      "title": "Cell: Starting Containers",
+      "definition":{
+        "requests":[
+          {
+            "q": "(min:datadog.nozzle.rep.StartingContainerCount{deployment:<%= metron_agent_diego_deployment %>} by {ip})",
+            "type": "bars"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
     }
   ]
 }
