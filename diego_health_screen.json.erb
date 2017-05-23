@@ -265,7 +265,8 @@
       "definition":{
         "requests":[
           {
-            "q": "avg:datadog.nozzle.locket.ActivePresences{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}"
+            "q": "avg:datadog.nozzle.locket.ActivePresences{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "line"
           }
         ],
         "events":[
@@ -280,7 +281,8 @@
       "definition":{
         "requests":[
           {
-            "q": "avg:datadog.nozzle.locket.ActiveLocks{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}"
+            "q": "avg:datadog.nozzle.locket.ActiveLocks{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "line"
           }
         ],
         "events":[
