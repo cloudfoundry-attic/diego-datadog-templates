@@ -470,8 +470,6 @@
     ].each do |group|
     [
       {:title => "Go: # Goroutines", :metric => "numGoRoutines"},
-      {:title => "Go: # CPUs", :metric => "numCPUS"},
-      {:title => "Go: # Mallocs", :metric => "memoryStats.numMallocs"},
       {:title => "Go: GC Pause Time (NS)", :metric => "memoryStats.lastGCPauseTimeNS"},
       {:title => "Go: Heap (bytes)", :metric => "memoryStats.numBytesAllocatedHeap"},
       {:title => "Go: Stack (bytes)", :metric => "memoryStats.numBytesAllocatedStack"},
@@ -496,72 +494,6 @@
     },
     <% end %>
     <% end %>
-    {
-      "title": "Etcd: Raft Term",
-      "definition":{
-        "requests":[
-          {
-            "q": "datadog.nozzle.bbs.ETCDRaftTerm{deployment:<%= metron_agent_diego_deployment %>}"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Etcd: Watchers",
-      "definition":{
-        "requests":[
-          {
-            "q": "datadog.nozzle.bbs.ETCDWatchers{deployment:<%= metron_agent_diego_deployment %>}"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Etcd: BandwidthRate (bytes per second)",
-      "definition":{
-        "requests":[
-          {
-            "q": "datadog.nozzle.bbs.ETCDReceivedBandwidthRate{deployment:<%= metron_agent_diego_deployment %>}"
-          },
-          {
-            "q": "datadog.nozzle.bbs.ETCDSentBandwidthRate{deployment:<%= metron_agent_diego_deployment %>}"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Etcd: RequestRate (per second)",
-      "definition":{
-        "requests":[
-          {
-            "q": "datadog.nozzle.bbs.ETCDReceivedRequestRate{deployment:<%= metron_agent_diego_deployment %>}"
-          },
-          {
-            "q": "datadog.nozzle.bbs.ETCDSentRequestRate{deployment:<%= metron_agent_diego_deployment %>}"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
     {
       "title": "System Disk Percent",
       "definition":{
@@ -604,27 +536,6 @@
           },
           {
             "q": "bosh.healthmonitor.system.disk.ephemeral.percent{deployment:<%= diego_deployment %>} by {job,index}",
-            "type": "line"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Persistent Disk Percent",
-      "definition":{
-          "viz": "timeseries",
-          "requests": [
-          {
-            "q": "bosh.healthmonitor.system.disk.persistent.percent{deployment:<%= diego_deployment %>} by {job,index}",
-            "type": "line"
-          },
-          {
-            "q": "bosh.healthmonitor.system.disk.persistent.percent{deployment:<%= diego_deployment %>} by {job,index}",
             "type": "line"
           }
         ],
@@ -950,18 +861,6 @@
       }
     },
     {
-      "title": "Cell: Garden Container Creation Duration (seconds)",
-      "definition":{
-        "viz": "timeseries",
-        "requests": [
-          {
-            "q": "avg:datadog.nozzle.rep.GardenContainerCreationDuration{deployment:<%= metron_agent_diego_deployment %>} by {index,ip,job} / 1000000000",
-            "type": "line"
-          }
-        ]
-      }
-    },
-    {
       "title": "Cell: Garden Container Creation Succeeded Duration (seconds)",
       "definition":{
         "viz": "timeseries",
@@ -1005,22 +904,6 @@
           {
             "q": "avg:datadog.nozzle.rep.GardenContainerDestructionFailedDuration{deployment:<%= metron_agent_diego_deployment %>} by {index,ip,job} / 1000000000",
             "type": "line"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Converger: Orphaned RunInfos",
-      "definition":{
-        "requests": [
-          {
-            "q": "datadog.nozzle.bbs.ConvergenceLRPPreProcessingOrphanedRunInfos{deployment: <%= metron_agent_diego_deployment %>}",
-            "type": "line"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
           }
         ]
       }
