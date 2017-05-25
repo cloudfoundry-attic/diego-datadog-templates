@@ -678,6 +678,23 @@
       }
     },
     {
+      "title": "BOSH VMs: Load Average (1m)",
+      "definition":{
+          "viz": "timeseries",
+          "requests": [
+          {
+            "q": "bosh.healthmonitor.system.load.1m{deployment:<%= diego_deployment %>} by {job,id,index}",
+            "type": "line"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
       "title": "BOSH VMs: CPU System",
       "definition":{
           "viz": "timeseries",
@@ -842,20 +859,6 @@
             "q": "max:datadog.nozzle.nsync_bulker.DesiredLRPSyncDuration{deployment:<%= metron_agent_diego_deployment %>}/1000000000",
             "type": "line"
           }
-        ],
-        "viz": "timeseries",
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "NSYNC: Received Desired Apps (per minute)",
-      "definition":{
-        "requests": [
-          { "q": "per_minute(datadog.nozzle.nsync_listener.LRPsDesired{deployment:<%= metron_agent_diego_deployment %>})" }
         ],
         "viz": "timeseries",
         "events":[
