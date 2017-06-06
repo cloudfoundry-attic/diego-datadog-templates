@@ -271,7 +271,8 @@
       "definition":{
         "requests":[
           {
-            "q": "avg:datadog.nozzle.locket.LocksExpired{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}"
+            "q": "avg:datadog.nozzle.locket.LocksExpired{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "line"
           }
         ],
         "events":[
