@@ -283,6 +283,22 @@
       }
     },
     {
+      "title": "Locket: Presence Expired",
+      "definition":{
+        "requests":[
+          {
+            "q": "avg:datadog.nozzle.locket.PresenceExpired{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "line"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
       "title": "Route Emitter: Total Routes",
       "definition":{
           "viz": "timeseries",
