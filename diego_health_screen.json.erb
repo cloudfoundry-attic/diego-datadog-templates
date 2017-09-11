@@ -100,6 +100,22 @@
       }
     },
     {
+      "title": "BBS: Locket Lock Held",
+      "definition":{
+        "requests": [
+          {
+            "q": "datadog.nozzle.bbs.LockHeld{deployment: <%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "line"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
       "title": "Canary App Instance Count",
       "definition":{
         "requests":[
@@ -428,6 +444,22 @@
           }
         ],
         "viz": "timeseries",
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Auctioneer: Locket Lock Held",
+      "definition":{
+        "requests": [
+          {
+            "q": "datadog.nozzle.auctioneer.LockHeld{deployment: <%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "line"
+          }
+        ],
         "events":[
           {
             "q": "<%= bosh_event_query_string %>"
