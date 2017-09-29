@@ -21,10 +21,8 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "max:benchmarks.<%= environment + "_postgres" %>.ConvergenceGathering{*}.rollup(max)",
-            "conditional_formats": [
-
-            ],
+            "q": "sum:datadog.nozzle.bbs.ConvergenceLRPDuration{deployment:<%= environment + "_postgres" %>}/1000000000",
+            "conditional_formats": [],
             "type": "line"
           }
         ]

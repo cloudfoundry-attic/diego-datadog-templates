@@ -21,7 +21,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "max:benchmarks.<%= environment %>.ConvergenceGathering{*}.rollup(max)",
+            "q": "sum:datadog.nozzle.bbs.ConvergenceLRPDuration{deployment:<%= environment %>}/1000000000",
             "conditional_formats": [
 
             ],
