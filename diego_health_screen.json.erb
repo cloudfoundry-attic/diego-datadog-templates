@@ -911,7 +911,7 @@
           }
         ]
       }
-    },
+    }
     <%
     [
       {:prefix => "API and Brain", :processes => ["auctioneer", "bbs", "file_server", "locket", "ssh_proxy"]},
@@ -931,6 +931,7 @@
         }
       }
     %>
+    ,
     {
       "title": "<%= group[:prefix] + " " + metric[:title] %>",
       "definition":{
@@ -941,62 +942,8 @@
           }
         ]
       }
-    },
-    <% end %>
-    <% end %>
-    {
-      "title": "NSYNC: Bulker Duration (seconds)",
-      "definition":{
-        "requests": [
-          {
-            "q": "max:datadog.nozzle.nsync_bulker.DesiredLRPSyncDuration{deployment:<%= metron_agent_diego_deployment %>}/1000000000",
-            "type": "line"
-          }
-        ],
-        "viz": "timeseries",
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Stager: Staging Duration (seconds)",
-      "definition":{
-        "requests": [
-          {
-            "q": "max:datadog.nozzle.stager.StagingRequestSucceededDuration{deployment: <%= metron_agent_diego_deployment %>} / 1000000000",
-            "type": "line"
-          },
-          {
-            "q": "max:datadog.nozzle.stager.StagingRequestFailedDuration{deployment: <%= metron_agent_diego_deployment %>} / 1000000000",
-            "type": "line"
-          }
-        ],
-        "viz": "timeseries",
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Stager: Staging Messages (per minute)",
-      "definition":{
-        "requests": [
-          { "q": "per_minute(datadog.nozzle.stager.StagingRequestsReceived{deployment: <%= metron_agent_diego_deployment %>})" },
-          { "q": "per_minute(datadog.nozzle.stager.StagingRequestsSucceeded{deployment: <%= metron_agent_diego_deployment %>})" },
-          { "q": "per_minute(datadog.nozzle.stager.StagingRequestsFailed{deployment: <%= metron_agent_diego_deployment %>})" }
-        ],
-        "viz": "timeseries",
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
     }
+    <% end %>
+    <% end %>
   ]
 }
