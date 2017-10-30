@@ -599,6 +599,22 @@
       }
     },
     {
+      "title": "Cell Rep: Stranded Evacuating ActualLRPs",
+      "definition":{
+        "requests":[
+          {
+            "q": "(min:datadog.nozzle.rep.StrandedEvacuatingActualLRPs{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
+            "type": "bars"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
       "title": "Cell Rep: Garden Container Creation Succeeded Duration (seconds)",
       "definition":{
         "viz": "timeseries",
