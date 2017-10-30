@@ -100,22 +100,6 @@
       }
     },
     {
-      "title": "BBS: Locket Lock Held",
-      "definition":{
-        "requests": [
-          {
-            "q": "datadog.nozzle.bbs.LockHeld{deployment: <%= metron_agent_diego_deployment %>} by {job,index,ip}",
-            "type": "line"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
       "title": "Canary App Instance Count",
       "definition":{
         "requests":[
@@ -169,6 +153,22 @@
         "requests":[
           {
             "q": "(min:datadog.nozzle.rep.CapacityRemainingDisk{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}) / 0.000001048576",
+            "type": "bars"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "BBS: Locket Lock Held",
+      "definition":{
+        "requests": [
+          {
+            "q": "datadog.nozzle.bbs.LockHeld{deployment: <%= metron_agent_diego_deployment %>} by {job,index,ip}",
             "type": "bars"
           }
         ],
@@ -363,6 +363,22 @@
       }
     },
     {
+      "title": "Auctioneer: Locket Lock Held",
+      "definition":{
+        "requests": [
+          {
+            "q": "datadog.nozzle.auctioneer.LockHeld{deployment: <%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "bars"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
       "title": "Auctioneer: Request Count (per minute)",
       "definition":{
         "viz": "timeseries",
@@ -444,22 +460,6 @@
           }
         ],
         "viz": "timeseries",
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Auctioneer: Locket Lock Held",
-      "definition":{
-        "requests": [
-          {
-            "q": "datadog.nozzle.auctioneer.LockHeld{deployment: <%= metron_agent_diego_deployment %>} by {job,index,ip}",
-            "type": "line"
-          }
-        ],
         "events":[
           {
             "q": "<%= bosh_event_query_string %>"
