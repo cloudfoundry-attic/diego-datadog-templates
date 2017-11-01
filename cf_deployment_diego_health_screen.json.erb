@@ -1,0 +1,1157 @@
+<%
+    bosh_event_query_string = "\\\"Begin update deployment for '#{diego_deployment}' against Director\\\" OR \\\"Finish update deployment for '#{diego_deployment}' against Director\\\" OR \\\"Error during update deployment for '#{diego_deployment}' against Director\\\" OR \\\"Begin update deployment for '#{deployment}' against Director\\\" OR \\\"Finish update deployment for '#{deployment}' against Director\\\" OR \\\"Error during update deployment for '#{deployment}' against Director\\\""
+%>
+
+{
+  "title": "<%= environment %> CF-Deployment Diego Health",
+  "description": "<%= environment %> Diego Health",
+  "graphs":[
+    {
+      "title": "BBS: LRPs",
+      "definition":{
+        "requests": [
+          {
+            "q": "datadog.nozzle.bbs.LRPsDesired{deployment: <%= metron_agent_deployment %>}"
+          },
+          {
+            "q": "datadog.nozzle.bbs.LRPsClaimed{deployment: <%= metron_agent_deployment %>}"
+          },
+          {
+            "q": "avg:datadog.nozzle.bbs.LRPsUnclaimed{deployment: <%= metron_agent_deployment %>}"
+          },
+          {
+            "q": "datadog.nozzle.bbs.LRPsRunning{deployment: <%= metron_agent_deployment %>}"
+          },
+          {
+            "q": "datadog.nozzle.bbs.CrashedActualLRPs{deployment: <%= metron_agent_deployment %>}"
+          },
+          {
+            "q": "datadog.nozzle.bbs.LRPsDesired{deployment: <%= metron_agent_diego_deployment %>}"
+          },
+          {
+            "q": "datadog.nozzle.bbs.LRPsClaimed{deployment: <%= metron_agent_diego_deployment %>}"
+          },
+          {
+            "q": "avg:datadog.nozzle.bbs.LRPsUnclaimed{deployment: <%= metron_agent_diego_deployment %>}"
+          },
+          {
+            "q": "datadog.nozzle.bbs.LRPsRunning{deployment: <%= metron_agent_diego_deployment %>}"
+          },
+          {
+            "q": "datadog.nozzle.bbs.CrashedActualLRPs{deployment: <%= metron_agent_diego_deployment %>}"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "BBS: Non-Running LRPs",
+      "definition":{
+        "requests": [
+          {
+            "q": "datadog.nozzle.bbs.LRPsClaimed{deployment: <%= metron_agent_deployment %>}"
+          },
+          {
+            "q": "avg:datadog.nozzle.bbs.LRPsUnclaimed{deployment: <%= metron_agent_deployment %>}"
+          },
+          {
+            "q": "datadog.nozzle.bbs.CrashedActualLRPs{deployment: <%= metron_agent_deployment %>}"
+          },
+          {
+            "q": "datadog.nozzle.bbs.LRPsClaimed{deployment: <%= metron_agent_diego_deployment %>}"
+          },
+          {
+            "q": "avg:datadog.nozzle.bbs.LRPsUnclaimed{deployment: <%= metron_agent_diego_deployment %>}"
+          },
+          {
+            "q": "datadog.nozzle.bbs.CrashedActualLRPs{deployment: <%= metron_agent_diego_deployment %>}"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "BBS: Missing and Extra LRPs",
+      "definition":{
+        "requests": [
+          {
+            "q": "datadog.nozzle.bbs.LRPsMissing{deployment: <%= metron_agent_deployment %>}"
+          },
+          {
+            "q": "datadog.nozzle.bbs.LRPsExtra{deployment: <%= metron_agent_deployment %>}"
+          },
+          {
+            "q": "datadog.nozzle.bbs.LRPsMissing{deployment: <%= metron_agent_diego_deployment %>}"
+          },
+          {
+            "q": "datadog.nozzle.bbs.LRPsExtra{deployment: <%= metron_agent_diego_deployment %>}"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "BBS: Tasks",
+      "definition":{
+        "requests":[
+          {
+            "q": "avg:datadog.nozzle.bbs.TasksPending{deployment:<%= metron_agent_deployment %>}"
+          },
+          {
+            "q": "avg:datadog.nozzle.bbs.TasksClaimed{deployment:<%= metron_agent_deployment %>}"
+          },
+          {
+            "q": "avg:datadog.nozzle.bbs.TasksRunning{deployment:<%= metron_agent_deployment %>}"
+          },
+          {
+            "q": "avg:datadog.nozzle.bbs.TasksCompleted{deployment:<%= metron_agent_deployment %>}"
+          },
+          {
+            "q": "avg:datadog.nozzle.bbs.TasksResolving{deployment:<%= metron_agent_deployment %>}"
+          },
+          {
+            "q": "avg:datadog.nozzle.bbs.TasksPending{deployment:<%= metron_agent_diego_deployment %>}"
+          },
+          {
+            "q": "avg:datadog.nozzle.bbs.TasksClaimed{deployment:<%= metron_agent_diego_deployment %>}"
+          },
+          {
+            "q": "avg:datadog.nozzle.bbs.TasksRunning{deployment:<%= metron_agent_diego_deployment %>}"
+          },
+          {
+            "q": "avg:datadog.nozzle.bbs.TasksCompleted{deployment:<%= metron_agent_diego_deployment %>}"
+          },
+          {
+            "q": "avg:datadog.nozzle.bbs.TasksResolving{deployment:<%= metron_agent_diego_deployment %>}"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Canary App Instance Count",
+      "definition":{
+        "requests":[
+          {
+            "q": "sum:diego.canary.app.instance{deployment:<%= metron_agent_diego_deployment %>}",
+            "type": "line"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Cell Rep: Unhealthy Cells",
+      "definition":{
+        "requests":[
+          {
+            "q": "sum:datadog.nozzle.rep.UnhealthyCell{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "bars"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Cell Rep: Available Memory",
+      "definition":{
+        "requests":[
+          {
+            "q": "(min:datadog.nozzle.rep.CapacityRemainingMemory{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}) / 0.000001024",
+            "type": "bars"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Cell Rep: Available Disk",
+      "definition":{
+        "requests":[
+          {
+            "q": "(min:datadog.nozzle.rep.CapacityRemainingDisk{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}) / 0.000001048576",
+            "type": "bars"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "BBS: Locket Lock Held",
+      "definition":{
+        "requests": [
+          {
+            "q": "datadog.nozzle.bbs.LockHeld{deployment: <%= metron_agent_deployment %>} by {job,index,ip}",
+            "type": "bars"
+          },
+          {
+            "q": "datadog.nozzle.bbs.LockHeld{deployment: <%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "bars"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "BBS: Request Count (per minute)",
+      "definition":{
+        "viz": "timeseries",
+        "requests": [
+          {
+            "q": "per_minute(avg:datadog.nozzle.bbs.RequestCount{deployment:<%= metron_agent_deployment %>} by {job,index,ip})",
+            "type": "line"
+          },
+          {
+            "q": "per_minute(avg:datadog.nozzle.bbs.RequestCount{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
+            "type": "line"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "BBS: Request Latency (seconds)",
+      "definition":{
+        "viz": "timeseries",
+        "requests": [
+          {
+            "q": "max:datadog.nozzle.bbs.RequestLatency{deployment:<%= metron_agent_deployment %>} by {job,index,ip}/1000000000",
+            "type": "line"
+          },
+          {
+            "q": "max:datadog.nozzle.bbs.RequestLatency{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}/1000000000",
+            "type": "line"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "BBS: Time To Converge (seconds)",
+      "definition":{
+        "requests": [
+          {
+            "q": "sum:datadog.nozzle.bbs.ConvergenceLRPDuration{deployment:<%= metron_agent_deployment %>}/1000000000",
+            "type": "line"
+          },
+          {
+            "q": "sum:datadog.nozzle.bbs.ConvergenceTaskDuration{deployment:<%= metron_agent_deployment %>}/1000000000",
+            "type": "line"
+          },
+          {
+            "q": "sum:datadog.nozzle.bbs.ConvergenceLRPDuration{deployment:<%= metron_agent_diego_deployment %>}/1000000000",
+            "type": "line"
+          },
+          {
+            "q": "sum:datadog.nozzle.bbs.ConvergenceTaskDuration{deployment:<%= metron_agent_diego_deployment %>}/1000000000",
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries",
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "BBS: cf-apps Domain Freshness (bool)",
+      "definition":{
+        "requests":[
+          {
+            "q": "max:datadog.nozzle.bbs.Domain.cf_apps{deployment:<%= metron_agent_deployment %>}",
+            "type": "line"
+          },
+          {
+            "q": "max:datadog.nozzle.bbs.Domain.cf_apps{deployment:<%= metron_agent_diego_deployment %>}",
+            "type": "line"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Locket: Active Locks",
+      "definition":{
+        "requests":[
+          {
+            "q": "avg:datadog.nozzle.locket.ActiveLocks{deployment:<%= metron_agent_deployment %>} by {job,index,ip}",
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.locket.ActiveLocks{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "line"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Locket: Active Presences",
+      "definition":{
+        "requests":[
+          {
+            "q": "avg:datadog.nozzle.locket.ActivePresences{deployment:<%= metron_agent_deployment %>} by {job,index,ip}",
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.locket.ActivePresences{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "line"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Locket: Locks Expired",
+      "definition":{
+        "requests":[
+          {
+            "q": "avg:datadog.nozzle.locket.LocksExpired{deployment:<%= metron_agent_deployment %>} by {job,index,ip}",
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.locket.LocksExpired{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "line"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Locket: Presence Expired",
+      "definition":{
+        "requests":[
+          {
+            "q": "avg:datadog.nozzle.locket.PresenceExpired{deployment:<%= metron_agent_deployment %>} by {job,index,ip}",
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.locket.PresenceExpired{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "line"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Route Emitter: Total Routes",
+      "definition":{
+          "viz": "timeseries",
+          "requests": [
+          {
+            "q": "avg:datadog.nozzle.route_emitter.RoutesTotal{deployment:<%= metron_agent_diego_deployment %>}"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Local Route Emitter: Total HTTP Routes",
+      "definition":{
+        "requests":[
+          {
+            "q": "(min:datadog.nozzle.route_emitter.HTTPRouteCount{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
+            "type": "bars"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Local Route Emitter: Total TCP Routes",
+      "definition":{
+        "requests":[
+          {
+            "q": "(min:datadog.nozzle.route_emitter.TCPRouteCount{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
+            "type": "bars"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Auctioneer: Locket Lock Held",
+      "definition":{
+        "requests": [
+          {
+            "q": "datadog.nozzle.auctioneer.LockHeld{deployment: <%= metron_agent_deployment %>} by {job,index,ip}",
+            "type": "bars"
+          },
+          {
+            "q": "datadog.nozzle.auctioneer.LockHeld{deployment: <%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "bars"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Auctioneer: Request Count (per minute)",
+      "definition":{
+        "viz": "timeseries",
+        "requests": [
+          {
+            "q": "per_minute(avg:datadog.nozzle.auctioneer.RequestCount{deployment:<%= metron_agent_deployment %>} by {job,index,ip})",
+            "type": "line"
+          },
+          {
+            "q": "per_minute(avg:datadog.nozzle.auctioneer.RequestCount{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
+            "type": "line"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Auctioneer: Request Latency (seconds)",
+      "definition":{
+        "viz": "timeseries",
+        "requests": [
+          {
+            "q": "max:datadog.nozzle.auctioneer.RequestLatency{deployment:<%= metron_agent_deployment %>} by {job,index,ip}/1000000000",
+            "type": "line"
+          },
+          {
+            "q": "max:datadog.nozzle.auctioneer.RequestLatency{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}/1000000000",
+            "type": "line"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Auctioneer: LRP Auctions (per minute)",
+      "definition":{
+          "viz": "timeseries",
+          "requests": [
+          {
+            "q": "per_minute(datadog.nozzle.auctioneer.AuctioneerLRPAuctionsStarted{deployment:<%= metron_agent_deployment %>} by {job,index,ip})",
+            "type": "line"
+          },
+          {
+            "q": "per_minute(datadog.nozzle.auctioneer.AuctioneerLRPAuctionsFailed{deployment:<%= metron_agent_deployment %>} by {job,index,ip})",
+            "type": "line"
+          },
+          {
+            "q": "per_minute(datadog.nozzle.auctioneer.AuctioneerLRPAuctionsStarted{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
+            "type": "line"
+          },
+          {
+            "q": "per_minute(datadog.nozzle.auctioneer.AuctioneerLRPAuctionsFailed{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
+            "type": "line"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Auctioneer: Task Auctions (per minute)",
+      "definition":{
+          "viz": "timeseries",
+          "requests": [
+          {
+            "q": "per_minute(datadog.nozzle.auctioneer.AuctioneerTaskAuctionsStarted{deployment:<%= metron_agent_deployment %>} by {job,index,ip})",
+            "type": "line"
+          },
+          {
+            "q": "per_minute(datadog.nozzle.auctioneer.AuctioneerTaskAuctionsFailed{deployment:<%= metron_agent_deployment %>} by {job,index,ip})",
+            "type": "line"
+          },
+          {
+            "q": "per_minute(datadog.nozzle.auctioneer.AuctioneerTaskAuctionsStarted{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
+            "type": "line"
+          },
+          {
+            "q": "per_minute(datadog.nozzle.auctioneer.AuctioneerTaskAuctionsFailed{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
+            "type": "line"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Auctioneer: Fetch Cell States Duration (seconds)",
+      "definition":{
+        "requests": [
+          {
+            "q": "max:datadog.nozzle.auctioneer.AuctioneerFetchStatesDuration{deployment:<%= metron_agent_deployment %>} by {job,index,ip}/1000000000",
+            "type": "line"
+          },
+          {
+            "q": "max:datadog.nozzle.auctioneer.AuctioneerFetchStatesDuration{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}/1000000000",
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries",
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "BBS: LRP Convergence Actions Taken (per minute)",
+      "definition":{
+        "requests": [
+          {
+            "q": "per_minute(sum:datadog.nozzle.bbs.ConvergenceLRPRuns{deployment:<%= metron_agent_deployment %>} by {job,index,ip})",
+            "type": "line"
+          },
+          {
+            "q": "per_minute(sum:datadog.nozzle.bbs.ConvergenceLRPRuns{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries",
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "BBS: Task Convergence Actions Taken (per minute)",
+      "definition":{
+        "requests": [
+          {
+            "q": "per_minute(sum:datadog.nozzle.bbs.ConvergenceTaskRuns{deployment:<%= metron_agent_deployment %>} by {job,index,ip})",
+            "type": "line"
+          },
+          {
+            "q": "per_minute(sum:datadog.nozzle.bbs.ConvergenceTasksKicked{deployment:<%= metron_agent_deployment %>} by {job,index,ip})",
+            "type": "line"
+          },
+          {
+            "q": "per_minute(sum:datadog.nozzle.bbs.ConvergenceTasksPruned{deployment:<%= metron_agent_deployment %>} by {job,index,ip})",
+            "type": "line"
+          },
+          {
+            "q": "per_minute(sum:datadog.nozzle.bbs.ConvergenceTaskRuns{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
+            "type": "line"
+          },
+          {
+            "q": "per_minute(sum:datadog.nozzle.bbs.ConvergenceTasksKicked{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
+            "type": "line"
+          },
+          {
+            "q": "per_minute(sum:datadog.nozzle.bbs.ConvergenceTasksPruned{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries",
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "BBS: Master Elections",
+      "definition":{
+        "viz": "timeseries",
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.bbs.BBSMasterElected{deployment:<%= metron_agent_deployment %>} by {job,index,ip}",
+            "type": "bars"
+          },
+          {
+            "q": "avg:datadog.nozzle.bbs.BBSMasterElected{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "bars"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "BBS: Migration Duration (seconds)",
+      "definition":{
+        "viz": "timeseries",
+        "requests": [
+          {
+            "q": "max:datadog.nozzle.bbs.MigrationDuration{deployment:<%= metron_agent_deployment %>}by {job,index,ip}/1000000000",
+            "type": "bars"
+          },
+          {
+            "q": "max:datadog.nozzle.bbs.MigrationDuration{deployment:<%= metron_agent_diego_deployment %>}by {job,index,ip}/1000000000",
+            "type": "bars"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "BBS: Encryption Duration (seconds)",
+      "definition":{
+        "viz": "timeseries",
+        "requests": [
+          {
+            "q": "max:datadog.nozzle.bbs.EncryptionDuration{deployment:<%= metron_agent_deployment %>} by {job,index,ip}/1000000000",
+            "type": "bars"
+          },
+          {
+            "q": "max:datadog.nozzle.bbs.EncryptionDuration{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}/1000000000",
+            "type": "bars"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "BBS: Open File Descriptors",
+      "definition":{
+        "requests":[
+          {
+            "q": "avg:datadog.nozzle.bbs.OpenFileDescriptors{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "line"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Cell Rep: Starting Containers",
+      "definition":{
+        "requests":[
+          {
+            "q": "(min:datadog.nozzle.rep.StartingContainerCount{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
+            "type": "bars"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Cell Rep: Bulk Duration (seconds)",
+      "definition":{
+        "requests": [
+          {
+            "q": "max:datadog.nozzle.rep.RepBulkSyncDuration{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip} /1000000000",
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries",
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Cell Rep: Stalled Garden Duration (seconds)",
+      "definition":{
+        "requests": [
+          {
+            "q": "max:datadog.nozzle.rep.StalledGardenDuration{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip} /1000000000",
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries",
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Cell Rep: Stranded Evacuating ActualLRPs",
+      "definition":{
+        "requests":[
+          {
+            "q": "(min:datadog.nozzle.rep.StrandedEvacuatingActualLRPs{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
+            "type": "bars"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Cell Rep: Garden Container Creation Succeeded Duration (seconds)",
+      "definition":{
+        "viz": "timeseries",
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.rep.GardenContainerCreationSucceededDuration{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip} / 1000000000",
+            "type": "line"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Cell Rep: Garden Container Creation Failed Duration (seconds)",
+      "definition":{
+        "viz": "timeseries",
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.rep.GardenContainerCreationFailedDuration{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip} / 1000000000",
+            "type": "line"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Cell Rep: Garden Container Destruction Succeeded Duration (seconds)",
+      "definition":{
+        "viz": "timeseries",
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.rep.GardenContainerDestructionSucceededDuration{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip} / 1000000000",
+            "type": "line"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Cell Rep: Garden Container Destruction Failed Duration (seconds)",
+      "definition":{
+        "viz": "timeseries",
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.rep.GardenContainerDestructionFailedDuration{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip} / 1000000000",
+            "type": "line"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Cell Rep: Credential Creation Succeeded Count (per minute)",
+      "definition":{
+        "viz": "timeseries",
+        "requests": [
+          {
+            "q": "per_minute(avg:datadog.nozzle.rep.CredCreationSucceededCount{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Cell Rep: Credential Creation Failed Count (per minute)",
+      "definition":{
+        "viz": "timeseries",
+        "requests": [
+          {
+            "q": "per_minute(avg:datadog.nozzle.rep.CredCreationFailedCount{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Cell Rep: Credential Creation Succeeded Duration (seconds)",
+      "definition":{
+        "viz": "timeseries",
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.rep.CredCreationSucceededDuration{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip} / 1000000000",
+            "type": "line"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Route Emitter: Incremental Updates (per second)",
+      "definition":{
+          "viz": "timeseries",
+          "requests": [
+          {
+            "q": "rate(datadog.nozzle.route_emitter.RoutesRegistered{deployment:<%= metron_agent_diego_deployment %>})"
+          },
+          {
+            "q": "-rate(datadog.nozzle.route_emitter.RoutesUnregistered{deployment:<%= metron_agent_diego_deployment %>})"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Route Emitter: Bulk Duration (seconds)",
+      "definition":{
+        "requests": [
+          {
+            "q": "max:datadog.nozzle.route_emitter.RouteEmitterSyncDuration{deployment:<%= metron_agent_diego_deployment %>}/1000000000",
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries",
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "SSH Proxy: SSH Connections",
+      "definition":{
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.ssh_proxy.ssh_connections{deployment:<%= metron_agent_deployment %>} by {job,index,ip}",
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.ssh_proxy.ssh_connections{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries",
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "BOSH VMs: System Memory Percent",
+      "definition":{
+          "viz": "timeseries",
+          "requests": [
+          {
+            "q": "bosh.healthmonitor.system.mem.percent{deployment:<%= diego_deployment %>} by {job,id,index}",
+            "type": "line"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ],
+        "markers": [
+          {
+            "value": "y > 80",
+            "type": "error bold"
+          },
+          {
+            "value": "y < 80",
+            "type": "ok dashed"
+          }
+        ]
+      }
+    },
+    {
+      "title": "BOSH VMs: Load Average (1m)",
+      "definition":{
+          "viz": "timeseries",
+          "requests": [
+          {
+            "q": "bosh.healthmonitor.system.load.1m{deployment:<%= diego_deployment %>} by {job,id,index}",
+            "type": "line"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "BOSH VMs: CPU System",
+      "definition":{
+          "viz": "timeseries",
+          "requests": [
+          {
+            "q": "bosh.healthmonitor.system.cpu.sys{deployment:<%= diego_deployment %>} by {job,id,index}",
+            "type": "line"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ],
+        "markers": [
+          {
+            "value": "y > 80",
+            "type": "error bold"
+          },
+          {
+            "value": "y < 80",
+            "type": "ok dashed"
+          }
+        ]
+      }
+    },
+    {
+      "title": "BOSH VMs: CPU User",
+      "definition":{
+          "viz": "timeseries",
+          "requests": [
+          {
+            "q": "bosh.healthmonitor.system.cpu.user{deployment:<%= diego_deployment %>} by {job,id,index}",
+            "type": "line"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ],
+        "markers": [
+          {
+            "value": "y > 80",
+            "type": "error bold"
+          },
+          {
+            "value": "y < 80",
+            "type": "ok dashed"
+          }
+        ]
+      }
+    },
+    {
+      "title": "BOSH VMs: CPU Wait",
+      "definition":{
+          "viz": "timeseries",
+          "requests": [
+          {
+            "q": "bosh.healthmonitor.system.cpu.wait{deployment:<%= diego_deployment %>} by {job,id,index}",
+            "type": "line"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ],
+        "markers": [
+          {
+            "value": "y > 80",
+            "type": "error bold"
+          },
+          {
+            "value": "y < 80",
+            "type": "ok dashed"
+          }
+        ]
+      }
+    },
+    {
+      "title": "BOSH VMs: System Disk Percent",
+      "definition":{
+          "viz": "timeseries",
+          "requests": [
+          {
+            "q": "bosh.healthmonitor.system.disk.system.percent{deployment:<%= diego_deployment %>} by {job,id,index}",
+            "type": "line"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ],
+        "markers": [
+          {
+            "value": "y > 80",
+            "type": "error bold"
+          },
+          {
+            "value": "y < 80",
+            "type": "ok dashed"
+          }
+        ]
+      }
+    },
+    {
+      "title": "BOSH VMs: Ephemeral Disk Percent",
+      "definition":{
+          "viz": "timeseries",
+          "requests": [
+          {
+            "q": "bosh.healthmonitor.system.disk.ephemeral.percent{deployment:<%= diego_deployment %>} by {job,id,index}",
+            "type": "line"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    }
+    <%
+    [
+      {:prefix => "API and Brain", :control_plane => true,  :processes => ["auctioneer", "bbs", "file_server", "locket", "ssh_proxy"]},
+      {:prefix => "Cell",          :control_plane => false, :processes => ["garden_linux", "rep", "route_emitter"]},
+      {:prefix => "CC-Bridge",     :control_plane => true,  :processes => ["cc_uploader","nsync_bulker", "nsync_listener", "stager", "tps_listener", "tps_watcher"]},
+    ].each do |group|
+    [
+      {:title => "Go: Heap (bytes)", :metric => "memoryStats.numBytesAllocatedHeap"},
+      {:title => "Go: Stack (bytes)", :metric => "memoryStats.numBytesAllocatedStack"},
+      {:title => "Go: GC Pause Time (NS)", :metric => "memoryStats.lastGCPauseTimeNS"},
+      {:title => "Go: # Goroutines", :metric => "numGoRoutines"},
+    ].each do |metric|
+      requests = group[:processes].map { |process|
+        if group[:control_plane]
+        [{
+          "q" => "datadog.nozzle.#{process}.#{metric[:metric]}{deployment:#{metron_agent_deployment}} by {job,index,ip}",
+          "type" => "line",
+        },
+        {
+          "q" => "datadog.nozzle.#{process}.#{metric[:metric]}{deployment:#{metron_agent_diego_deployment}} by {job,index,ip}",
+          "type" => "line",
+        }]
+        else
+        [{
+          "q" => "datadog.nozzle.#{process}.#{metric[:metric]}{deployment:#{metron_agent_diego_deployment}} by {job,index,ip}",
+          "type" => "line",
+        }]
+        end
+      }
+    %>
+    ,
+    {
+      "title": "<%= group[:prefix] + " " + metric[:title] %>",
+      "definition":{
+        "requests": <%= requests.flatten.to_json %>,
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    }
+    <% end %>
+    <% end %>
+  ]
+}
