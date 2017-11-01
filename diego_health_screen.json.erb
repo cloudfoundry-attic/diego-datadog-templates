@@ -565,6 +565,22 @@
       }
     },
     {
+      "title": "BBS: Open File Descriptors",
+      "definition":{
+        "requests":[
+          {
+            "q": "avg:datadog.nozzle.bbs.OpenFileDescriptors{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "line"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
       "title": "Cell Rep: Starting Containers",
       "definition":{
         "requests":[
