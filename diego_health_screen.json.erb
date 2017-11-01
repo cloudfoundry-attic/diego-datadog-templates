@@ -335,7 +335,7 @@
       "definition":{
         "requests":[
           {
-            "q": "(min:datadog.nozzle.route_emitter.HTTPRouteCount{deployment:<%= metron_agent_diego_deployment %>} by {ip})",
+            "q": "(min:datadog.nozzle.route_emitter.HTTPRouteCount{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
             "type": "bars"
           }
         ],
@@ -351,7 +351,7 @@
       "definition":{
         "requests":[
           {
-            "q": "(min:datadog.nozzle.route_emitter.TCPRouteCount{deployment:<%= metron_agent_diego_deployment %>} by {ip})",
+            "q": "(min:datadog.nozzle.route_emitter.TCPRouteCount{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
             "type": "bars"
           }
         ],
@@ -418,10 +418,12 @@
           "viz": "timeseries",
           "requests": [
           {
-            "q": "per_minute(datadog.nozzle.auctioneer.AuctioneerLRPAuctionsStarted{deployment:<%= metron_agent_diego_deployment %>})"
+            "q": "per_minute(datadog.nozzle.auctioneer.AuctioneerLRPAuctionsStarted{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
+            "type": "line"
           },
           {
-            "q": "per_minute(datadog.nozzle.auctioneer.AuctioneerLRPAuctionsFailed{deployment:<%= metron_agent_diego_deployment %>})"
+            "q": "per_minute(datadog.nozzle.auctioneer.AuctioneerLRPAuctionsFailed{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
+            "type": "line"
           }
         ],
         "events":[
@@ -437,10 +439,12 @@
           "viz": "timeseries",
           "requests": [
           {
-            "q": "per_minute(datadog.nozzle.auctioneer.AuctioneerTaskAuctionsStarted{deployment:<%= metron_agent_diego_deployment %>})"
+            "q": "per_minute(datadog.nozzle.auctioneer.AuctioneerTaskAuctionsStarted{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
+            "type": "line"
           },
           {
-            "q": "per_minute(datadog.nozzle.auctioneer.AuctioneerTaskAuctionsFailed{deployment:<%= metron_agent_diego_deployment %>})"
+            "q": "per_minute(datadog.nozzle.auctioneer.AuctioneerTaskAuctionsFailed{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
+            "type": "line"
           }
         ],
         "events":[
@@ -455,7 +459,7 @@
       "definition":{
         "requests": [
           {
-            "q": "max:datadog.nozzle.auctioneer.AuctioneerFetchStatesDuration{deployment:<%= metron_agent_diego_deployment %>}/1000000000",
+            "q": "max:datadog.nozzle.auctioneer.AuctioneerFetchStatesDuration{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}/1000000000",
             "type": "line"
           }
         ],
@@ -471,7 +475,10 @@
       "title": "BBS: LRP Convergence Actions Taken (per minute)",
       "definition":{
         "requests": [
-          { "q": "per_minute(sum:datadog.nozzle.bbs.ConvergenceLRPRuns{deployment:<%= metron_agent_diego_deployment %>})" }
+          {
+            "q": "per_minute(sum:datadog.nozzle.bbs.ConvergenceLRPRuns{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
+            "type": "line"
+          }
         ],
         "viz": "timeseries",
         "events":[
@@ -485,9 +492,18 @@
       "title": "BBS: Task Convergence Actions Taken (per minute)",
       "definition":{
         "requests": [
-          { "q": "per_minute(sum:datadog.nozzle.bbs.ConvergenceTaskRuns{deployment:<%= metron_agent_diego_deployment %>})" },
-          { "q": "per_minute(sum:datadog.nozzle.bbs.ConvergenceTasksKicked{deployment:<%= metron_agent_diego_deployment %>})" },
-          { "q": "per_minute(sum:datadog.nozzle.bbs.ConvergenceTasksPruned{deployment:<%= metron_agent_diego_deployment %>})" }
+          {
+            "q": "per_minute(sum:datadog.nozzle.bbs.ConvergenceTaskRuns{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
+            "type": "line"
+          },
+          {
+            "q": "per_minute(sum:datadog.nozzle.bbs.ConvergenceTasksKicked{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
+            "type": "line"
+          },
+          {
+            "q": "per_minute(sum:datadog.nozzle.bbs.ConvergenceTasksPruned{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
+            "type": "line"
+          }
         ],
         "viz": "timeseries",
         "events":[
@@ -553,7 +569,7 @@
       "definition":{
         "requests":[
           {
-            "q": "(min:datadog.nozzle.rep.StartingContainerCount{deployment:<%= metron_agent_diego_deployment %>} by {ip})",
+            "q": "(min:datadog.nozzle.rep.StartingContainerCount{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
             "type": "bars"
           }
         ],
@@ -620,7 +636,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "avg:datadog.nozzle.rep.GardenContainerCreationSucceededDuration{deployment:<%= metron_agent_diego_deployment %>} by {index,ip,job} / 1000000000",
+            "q": "avg:datadog.nozzle.rep.GardenContainerCreationSucceededDuration{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip} / 1000000000",
             "type": "line"
           }
         ]
@@ -632,7 +648,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "avg:datadog.nozzle.rep.GardenContainerCreationFailedDuration{deployment:<%= metron_agent_diego_deployment %>} by {index,ip,job} / 1000000000",
+            "q": "avg:datadog.nozzle.rep.GardenContainerCreationFailedDuration{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip} / 1000000000",
             "type": "line"
           }
         ]
@@ -644,7 +660,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "avg:datadog.nozzle.rep.GardenContainerDestructionSucceededDuration{deployment:<%= metron_agent_diego_deployment %>} by {index,ip,job} / 1000000000",
+            "q": "avg:datadog.nozzle.rep.GardenContainerDestructionSucceededDuration{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip} / 1000000000",
             "type": "line"
           }
         ]
@@ -656,7 +672,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "avg:datadog.nozzle.rep.GardenContainerDestructionFailedDuration{deployment:<%= metron_agent_diego_deployment %>} by {index,ip,job} / 1000000000",
+            "q": "avg:datadog.nozzle.rep.GardenContainerDestructionFailedDuration{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip} / 1000000000",
             "type": "line"
           }
         ]
@@ -668,7 +684,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "per_minute(avg:datadog.nozzle.rep.CredCreationSucceededCount{deployment:<%= metron_agent_diego_deployment %>} by {ip})"
+            "q": "per_minute(avg:datadog.nozzle.rep.CredCreationSucceededCount{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})"
           }
         ],
         "events":[
@@ -684,7 +700,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "per_minute(avg:datadog.nozzle.rep.CredCreationFailedCount{deployment:<%= metron_agent_diego_deployment %>} by {ip})"
+            "q": "per_minute(avg:datadog.nozzle.rep.CredCreationFailedCount{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})"
           }
         ],
         "events":[
@@ -700,7 +716,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "avg:datadog.nozzle.rep.CredCreationSucceededDuration{deployment:<%= metron_agent_diego_deployment %>} by {ip} / 1000000000",
+            "q": "avg:datadog.nozzle.rep.CredCreationSucceededDuration{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip} / 1000000000",
             "type": "line"
           }
         ]
@@ -809,7 +825,7 @@
           "viz": "timeseries",
           "requests": [
           {
-            "q": "bosh.healthmonitor.system.cpu.sys{deployment:<%= diego_deployment %>} by {job,index}",
+            "q": "bosh.healthmonitor.system.cpu.sys{deployment:<%= diego_deployment %>} by {job,id,index}",
             "type": "line"
           }
         ],
@@ -836,7 +852,7 @@
           "viz": "timeseries",
           "requests": [
           {
-            "q": "bosh.healthmonitor.system.cpu.user{deployment:<%= diego_deployment %>} by {job,index}",
+            "q": "bosh.healthmonitor.system.cpu.user{deployment:<%= diego_deployment %>} by {job,id,index}",
             "type": "line"
           }
         ],
@@ -863,7 +879,7 @@
           "viz": "timeseries",
           "requests": [
           {
-            "q": "bosh.healthmonitor.system.cpu.wait{deployment:<%= diego_deployment %>} by {job,index}",
+            "q": "bosh.healthmonitor.system.cpu.wait{deployment:<%= diego_deployment %>} by {job,id,index}",
             "type": "line"
           }
         ],
