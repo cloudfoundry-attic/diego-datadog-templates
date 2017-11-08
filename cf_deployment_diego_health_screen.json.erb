@@ -714,6 +714,10 @@
       "definition":{
         "requests":[
           {
+            "q": "avg:datadog.nozzle.bbs.OpenFileDescriptors{deployment:<%= metron_agent_deployment %>} by {job,index,ip}",
+            "type": "line"
+          },
+          {
             "q": "avg:datadog.nozzle.bbs.OpenFileDescriptors{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
             "type": "line"
           }
