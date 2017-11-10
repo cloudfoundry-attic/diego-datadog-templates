@@ -165,11 +165,7 @@
       "definition":{
         "requests":[
           {
-            "q": "sum:datadog.nozzle.rep.UnhealthyCell{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
-            "type": "bars"
-          },
-          {
-            "q": "sum:datadog.nozzle.rep.UnhealthyCell{bosh_environment:<%= bosh_deployment %>} by {job,index,ip,deployment}",
+            "q": "sum:datadog.nozzle.rep.UnhealthyCell{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}, sum:datadog.nozzle.rep.UnhealthyCell{bosh_environment:<%= bosh_deployment %>} by {job,index,ip,deployment}",
             "type": "bars"
           }
         ],
@@ -185,11 +181,7 @@
       "definition":{
         "requests":[
           {
-            "q": "min:datadog.nozzle.rep.CapacityRemainingMemory{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip} / 0.000001024",
-            "type": "bars"
-          },
-          {
-            "q": "min:datadog.nozzle.rep.CapacityRemainingMemory{bosh_environment:<%= bosh_deployment %>} by {job,index,ip,deployment} / 0.000001024",
+            "q": "min:datadog.nozzle.rep.CapacityRemainingMemory{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip} / 0.000001024, min:datadog.nozzle.rep.CapacityRemainingMemory{bosh_environment:<%= bosh_deployment %>} by {job,index,ip,deployment} / 0.000001024",
             "type": "bars"
           }
         ],
@@ -205,11 +197,7 @@
       "definition":{
         "requests":[
           {
-            "q": "min:datadog.nozzle.rep.CapacityRemainingDisk{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip} / 0.000001048576",
-            "type": "bars"
-          },
-          {
-            "q": "min:datadog.nozzle.rep.CapacityRemainingDisk{bosh_environment:<%= bosh_deployment %>} by {job,index,ip,deployment} / 0.000001048576",
+            "q": "min:datadog.nozzle.rep.CapacityRemainingDisk{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip} / 0.000001048576, min:datadog.nozzle.rep.CapacityRemainingDisk{bosh_environment:<%= bosh_deployment %>} by {job,index,ip,deployment} / 0.000001048576",
             "type": "bars"
           }
         ],
@@ -225,11 +213,7 @@
       "definition":{
         "requests": [
           {
-            "q": "datadog.nozzle.bbs.LockHeld{deployment: <%= metron_agent_deployment %>} by {job,index,ip}",
-            "type": "bars"
-          },
-          {
-            "q": "datadog.nozzle.bbs.LockHeld{deployment: <%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "q": "datadog.nozzle.bbs.LockHeld{deployment: <%= metron_agent_deployment %>} by {job,index,ip}, datadog.nozzle.bbs.LockHeld{deployment: <%= metron_agent_diego_deployment %>} by {job,index,ip}",
             "type": "bars"
           }
         ],
@@ -435,11 +419,7 @@
       "definition":{
         "requests":[
           {
-            "q": "min:datadog.nozzle.route_emitter.HTTPRouteCount{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
-            "type": "bars"
-          },
-          {
-            "q": "min:datadog.nozzle.route_emitter.HTTPRouteCount{bosh_environment:<%= bosh_deployment %>} by {job,index,ip,deployment}",
+            "q": "max:datadog.nozzle.route_emitter.HTTPRouteCount{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}, max:datadog.nozzle.route_emitter.HTTPRouteCount{bosh_environment:<%= bosh_deployment %>} by {job,index,ip,deployment}",
             "type": "bars"
           }
         ],
@@ -455,11 +435,7 @@
       "definition":{
         "requests":[
           {
-            "q": "min:datadog.nozzle.route_emitter.TCPRouteCount{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
-            "type": "bars"
-          },
-          {
-            "q": "min:datadog.nozzle.route_emitter.TCPRouteCount{bosh_environment:<%= bosh_deployment %>} by {job,index,ip,deployment}",
+            "q": "max:datadog.nozzle.route_emitter.TCPRouteCount{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}, max:datadog.nozzle.route_emitter.TCPRouteCount{bosh_environment:<%= bosh_deployment %>} by {job,index,ip,deployment}",
             "type": "bars"
           }
         ],
@@ -475,11 +451,7 @@
       "definition":{
         "requests": [
           {
-            "q": "datadog.nozzle.auctioneer.LockHeld{deployment: <%= metron_agent_deployment %>} by {job,index,ip}",
-            "type": "bars"
-          },
-          {
-            "q": "datadog.nozzle.auctioneer.LockHeld{deployment: <%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "q": "datadog.nozzle.auctioneer.LockHeld{deployment: <%= metron_agent_deployment %>} by {job,index,ip}, datadog.nozzle.auctioneer.LockHeld{deployment: <%= metron_agent_diego_deployment %>} by {job,index,ip}",
             "type": "bars"
           }
         ],
@@ -675,11 +647,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "avg:datadog.nozzle.bbs.BBSMasterElected{deployment:<%= metron_agent_deployment %>} by {job,index,ip}",
-            "type": "bars"
-          },
-          {
-            "q": "avg:datadog.nozzle.bbs.BBSMasterElected{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "q": "avg:datadog.nozzle.bbs.BBSMasterElected{deployment:<%= metron_agent_deployment %>} by {job,index,ip}, avg:datadog.nozzle.bbs.BBSMasterElected{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
             "type": "bars"
           }
         ],
@@ -696,11 +664,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "max:datadog.nozzle.bbs.MigrationDuration{deployment:<%= metron_agent_deployment %>}by {job,index,ip}/1000000000",
-            "type": "bars"
-          },
-          {
-            "q": "max:datadog.nozzle.bbs.MigrationDuration{deployment:<%= metron_agent_diego_deployment %>}by {job,index,ip}/1000000000",
+            "q": "max:datadog.nozzle.bbs.MigrationDuration{deployment:<%= metron_agent_deployment %>} by {job,index,ip}/1000000000, max:datadog.nozzle.bbs.MigrationDuration{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}/1000000000",
             "type": "bars"
           }
         ],
@@ -717,11 +681,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "max:datadog.nozzle.bbs.EncryptionDuration{deployment:<%= metron_agent_deployment %>} by {job,index,ip}/1000000000",
-            "type": "bars"
-          },
-          {
-            "q": "max:datadog.nozzle.bbs.EncryptionDuration{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}/1000000000",
+            "q": "max:datadog.nozzle.bbs.EncryptionDuration{deployment:<%= metron_agent_deployment %>} by {job,index,ip}/1000000000, max:datadog.nozzle.bbs.EncryptionDuration{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}/1000000000",
             "type": "bars"
           }
         ],
@@ -777,11 +737,7 @@
       "definition":{
         "requests":[
           {
-            "q": "min:datadog.nozzle.rep.StartingContainerCount{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
-            "type": "bars"
-          },
-          {
-            "q": "min:datadog.nozzle.rep.StartingContainerCount{bosh_environment:<%= bosh_deployment %>} by {job,index,ip,deployment}",
+            "q": "max:datadog.nozzle.rep.StartingContainerCount{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}, max:datadog.nozzle.rep.StartingContainerCount{bosh_environment:<%= bosh_deployment %>} by {job,index,ip,deployment}",
             "type": "bars"
           }
         ],
@@ -839,11 +795,7 @@
       "definition":{
         "requests":[
           {
-            "q": "(min:datadog.nozzle.rep.StrandedEvacuatingActualLRPs{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
-            "type": "bars"
-          },
-          {
-            "q": "(min:datadog.nozzle.rep.StrandedEvacuatingActualLRPs{bosh_environment:<%= bosh_deployment %>} by {job,index,ip,deployment})",
+            "q": "max:datadog.nozzle.rep.StrandedEvacuatingActualLRPs{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}, max:datadog.nozzle.rep.StrandedEvacuatingActualLRPs{bosh_environment:<%= bosh_deployment %>} by {job,index,ip,deployment}",
             "type": "bars"
           }
         ],
