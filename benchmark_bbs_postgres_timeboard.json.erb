@@ -1,0 +1,152 @@
+{
+  "description": "created by cf-diego+datadog@pivotal.io",
+  "graphs": [
+    {
+      "title": "BBS: Time To Converge (seconds)",
+      "definition":{
+        "requests": [
+          {
+            "q": "sum:datadog.nozzle.bbs.ConvergenceLRPDuration{deployment:<%= metron_agent_diego_deployment + "-postgres" %>}/1000000000",
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries",
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "definition": {
+        "autoscale": true,
+        "requests": [
+          {
+            "conditional_formats": [
+
+            ],
+            "q": "max:benchmarks.<%= environment + "_postgres" %>.FetchActualLRPsAndSchedulingInfos{*}.rollup(max)",
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "benchmarks.<%= environment + "_postgres" %>.FetchActualLRPsAndSchedulingInfos"
+    },
+    {
+      "definition": {
+        "autoscale": true,
+        "requests": [
+          {
+            "conditional_formats": [
+
+            ],
+            "q": "max:benchmarks.<%= environment + "_postgres" %>.NsyncBulkerFetching{*}.rollup(max)",
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "benchmarks.<%= environment + "_postgres" %>.NsyncBulkerFetching"
+    },
+    {
+      "definition": {
+        "autoscale": true,
+        "requests": [
+          {
+            "conditional_formats": [
+
+            ],
+            "q": "max:benchmarks.<%= environment + "_postgres" %>.RepBulkFetching{*}.rollup(max)",
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "benchmarks.<%= environment + "_postgres" %>.RepBulkFetching"
+    },
+    {
+      "definition": {
+        "autoscale": true,
+        "requests": [
+          {
+            "conditional_formats": [
+
+            ],
+            "q": "max:benchmarks.<%= environment + "_postgres" %>.RepBulkLoop{*}.rollup(max)",
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "benchmarks.<%= environment + "_postgres" %>.RepBulkLoop"
+    },
+    {
+      "definition": {
+        "autoscale": true,
+        "requests": [
+          {
+            "conditional_formats": [
+
+            ],
+            "q": "max:benchmarks.<%= environment + "_postgres" %>.RepClaimActualLRP{*}.rollup(max)",
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "benchmarks.<%= environment + "_postgres" %>.RepClaimActualLRP"
+    },
+    {
+      "definition": {
+        "autoscale": true,
+        "requests": [
+          {
+            "conditional_formats": [
+
+            ],
+            "q": "max:benchmarks.<%= environment + "_postgres" %>.RepStartActualLRP{*}.rollup(max)",
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "benchmarks.<%= environment + "_postgres" %>.RepStartActualLRP"
+    },
+    {
+      "definition": {
+        "autoscale": true,
+        "requests": [
+          {
+            "conditional_formats": [
+
+            ],
+            "q": "max:benchmarks.<%= environment + "_postgres" %>.failed_actual_requests{*}.rollup(max)",
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "benchmarks.<%= environment + "_postgres" %>.failed_actual_requests"
+    },
+    {
+      "definition": {
+        "autoscale": true,
+        "requests": [
+          {
+            "conditional_formats": [
+
+            ],
+            "q": "max:benchmarks.<%= environment + "_postgres" %>.failed_desired_requests{*}.rollup(max)",
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "benchmarks.<%= environment + "_postgres" %>.failed_desired_requests"
+    }
+  ],
+  "read_only": false,
+  "title": "<%= environment + "_postgres" %> Diego Benchmark BBS timeboard"
+}
