@@ -21,7 +21,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "sum:datadog.nozzle.bbs.ConvergenceLRPDuration{deployment:<%= environment + "_postgres" %>}/1000000000",
+            "q": "sum:datadog.nozzle.bbs.ConvergenceLRPDuration{deployment:<%= metron_agent_diego_deployment + "-postgres" %>}/1000000000",
             "conditional_formats": [],
             "type": "line"
           }

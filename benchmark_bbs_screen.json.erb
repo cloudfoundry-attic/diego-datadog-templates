@@ -21,7 +21,7 @@
         "viz": "timeseries",
         "requests": [
           {
-            "q": "sum:datadog.nozzle.bbs.ConvergenceLRPDuration{deployment:<%= environment %>}/1000000000",
+            "q": "sum:datadog.nozzle.bbs.ConvergenceLRPDuration{deployment:<%= metron_agent_diego_deployment %>}/1000000000",
             "conditional_formats": [
 
             ],
