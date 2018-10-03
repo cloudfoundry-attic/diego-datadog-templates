@@ -45,6 +45,12 @@
           },
           {
             "q": "datadog.nozzle.bbs.CrashedActualLRPs{deployment: <%= metron_agent_diego_deployment %>}"
+          },
+          {
+            "q": "datadog.nozzle.bbs.SuspectRunningActualLRPs{deployment: <%= metron_agent_diego_deployment %>}"
+          },
+          {
+            "q": "datadog.nozzle.bbs.SuspectClaimedActualLRPs{deployment: <%= metron_agent_diego_deployment %>}"
           }
         ],
         "events":[
