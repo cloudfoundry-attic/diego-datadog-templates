@@ -653,6 +653,38 @@
       }
     },
     {
+      "title": "Cell Rep: Container Setup Succeeded Duration (seconds)",
+      "definition":{
+        "viz": "heatmap",
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.rep.ContainerSetupSucceededDuration{deployment:bosh-lite} by {job,index,ip}.rollup(max).fill(null)/1000000000",
+            "style": {
+              "palette": "cool",
+              "type": "solid",
+              "width": "normal"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "title": "Cell Rep: Container Setup Failed Duration (seconds)",
+      "definition":{
+        "viz": "heatmap",
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.rep.ContainerSetupFailedDuration{deployment:bosh-lite} by {job,index,ip}.rollup(max).fill(null)/1000000000",
+            "style": {
+              "palette": "cool",
+              "type": "solid",
+              "width": "normal"
+            }
+          }
+        ]
+      }
+    },
+    {
       "title": "Cell Rep: Garden Container Creation Succeeded Duration (seconds)",
       "definition":{
         "viz": "timeseries",
