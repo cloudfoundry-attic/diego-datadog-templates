@@ -658,7 +658,7 @@
         "viz": "heatmap",
         "requests": [
           {
-            "q": "avg:datadog.nozzle.rep.ContainerSetupSucceededDuration{deployment:bosh-lite} by {job,index,ip}.rollup(max).fill(null)/1000000000",
+            "q": "avg:datadog.nozzle.rep.ContainerSetupSucceededDuration{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}.rollup(max).fill(null)/1000000000",
             "style": {
               "palette": "cool",
               "type": "solid",
@@ -674,7 +674,7 @@
         "viz": "heatmap",
         "requests": [
           {
-            "q": "avg:datadog.nozzle.rep.ContainerSetupFailedDuration{deployment:bosh-lite} by {job,index,ip}.rollup(max).fill(null)/1000000000",
+            "q": "avg:datadog.nozzle.rep.ContainerSetupFailedDuration{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}.rollup(max).fill(null)/1000000000",
             "style": {
               "palette": "cool",
               "type": "solid",
