@@ -110,10 +110,10 @@
       "definition":{
         "requests": [
           {
-            "q": "datadog.nozzle.bbs.PresentCells{deployment: <%= metron_agent_deployment %>}"
+            "q": "datadog.nozzle.bbs.PresentCells{deployment: <%= metron_agent_diego_deployment %>}"
           },
           {
-            "q": "datadog.nozzle.bbs.SuspectCells{deployment: <%= metron_agent_deployment %>}"
+            "q": "datadog.nozzle.bbs.SuspectCells{deployment: <%= metron_agent_diego_deployment %>}"
           }
         ],
         "events":[
@@ -328,6 +328,23 @@
         "requests":[
           {
             "q": "avg:datadog.nozzle.locket.PresenceExpired{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "line"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Locket: Request Latency (seconds)",
+      "definition":{
+        "viz": "timeseries",
+        "requests": [
+          {
+            "q": "max:datadog.nozzle.locket.RequestLatencyMax{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}/1000000000",
             "type": "line"
           }
         ],
