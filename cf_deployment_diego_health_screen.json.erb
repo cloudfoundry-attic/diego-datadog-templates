@@ -864,6 +864,107 @@
       }
     },
     {
+      "title": "Cell Rep: Requests Started",
+      "definition":{
+        "requests":[
+          {
+            "q": "avg:datadog.nozzle.rep.RequestsStarted{deployment:<%= metron_agent_deployment %>} by {job,index,ip}",
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.rep.RequestsStarted{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "line"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Cell Rep: Requests Succeeded",
+      "definition":{
+        "requests":[
+          {
+            "q": "avg:datadog.nozzle.rep.RequestsSucceeded{deployment:<%= metron_agent_deployment %>} by {job,index,ip}",
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.rep.RequestsSucceeded{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "line"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Cell Rep: Requests Failed",
+      "definition":{
+        "requests":[
+          {
+            "q": "avg:datadog.nozzle.rep.RequestsFailed{deployment:<%= metron_agent_deployment %>} by {job,index,ip}",
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.rep.RequestsFailed{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "line"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Cell Rep: Requests In Flight",
+      "definition":{
+        "requests":[
+          {
+            "q": "avg:datadog.nozzle.rep.RequestsInFlight{deployment:<%= metron_agent_deployment %>} by {job,index,ip}",
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.rep.RequestsInFlight{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "line"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
+      "title": "Cell Rep: Request Latency (seconds)",
+      "definition":{
+        "viz": "timeseries",
+        "requests": [
+          {
+            "q": "max:datadog.nozzle.rep.RequestLatencyMax{deployment:<%= metron_agent_deployment %>} by {job,index,ip}/1000000000",
+            "type": "line"
+          },
+          {
+            "q": "max:datadog.nozzle.rep.RequestLatencyMax{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}/1000000000",
+            "type": "line"
+          }
+        ],
+        "events":[
+          {
+            "q": "<%= bosh_event_query_string %>"
+          }
+        ]
+      }
+    },
+    {
       "title": "Cell Rep: Container Setup Succeeded Duration (seconds)",
       "definition":{
         "viz": "heatmap",
