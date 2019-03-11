@@ -864,16 +864,16 @@
       }
     },
     {
-      "title": "Cell Rep: Request Latency (seconds)",
+      "title": "Cell Rep: State Request Latency (seconds)",
       "definition":{
         "viz": "timeseries",
         "requests": [
           {
-            "q": "max:datadog.nozzle.rep.RequestLatencyMax{deployment:<%= metron_agent_deployment %>} by {job,index,ip}/1000000000",
+            "q": "max:datadog.nozzle.rep.RequestLatencyMax{deployment:<%= metron_agent_deployment %>,request-type:state} by {job,index,ip}/1000000000",
             "type": "line"
           },
           {
-            "q": "max:datadog.nozzle.rep.RequestLatencyMax{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}/1000000000",
+            "q": "max:datadog.nozzle.rep.RequestLatencyMax{deployment:<%= metron_agent_diego_deployment %>,request-type:state} by {job,index,ip}/1000000000",
             "type": "line"
           }
         ],
