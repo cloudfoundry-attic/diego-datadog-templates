@@ -197,11 +197,11 @@
       }
     },
     {
-      "title": "Cell Rep: Unhealthy Cells",
+      "title": "Cell Rep: Garden Unhealthy",
       "definition":{
         "requests":[
           {
-            "q": "sum:datadog.nozzle.rep.UnhealthyCell{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}, sum:datadog.nozzle.rep.UnhealthyCell{bosh_environment:<%= bosh_deployment %>} by {job,index,ip,deployment}",
+            "q": "sum:datadog.nozzle.rep.GardenHealthCheckFailed{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}, sum:datadog.nozzle.rep.GardenHealthCheckFailed{bosh_environment:<%= bosh_deployment %>} by {job,index,ip,deployment}",
             "type": "bars"
           }
         ],
