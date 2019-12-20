@@ -1,1087 +1,1881 @@
-<%
-    bosh_event_query_string = "\\\"Begin update deployment for '#{diego_deployment}' against Director\\\" OR \\\"Finish update deployment for '#{diego_deployment}' against Director\\\" OR \\\"Error during update deployment for '#{diego_deployment}' against Director\\\" OR \\\"Begin update deployment for '#{deployment}' against Director\\\" OR \\\"Finish update deployment for '#{deployment}' against Director\\\" OR \\\"Error during update deployment for '#{deployment}' against Director\\\""
-%>
-
 {
-  "title": "<%= environment %> Diego Health",
+  "created_by": {
+    "access_role": "st",
+    "disabled": false,
+    "email": "cloudops+datadog-dashboard@pivotal.io",
+    "handle": "cloudops+datadog-dashboard@pivotal.io",
+    "icon": "https://secure.gravatar.com/avatar/79b447724ebe8b28f74400947cb1f873?s=48&d=retro",
+    "is_admin": false,
+    "name": null,
+    "role": null,
+    "verified": true
+  },
   "description": "<%= environment %> Diego Health",
-  "graphs":[
+  "graphs": [
     {
-      "title": "BBS: LRPs",
-      "definition":{
-        "requests": [
+      "definition": {
+        "events": [
           {
-            "q": "datadog.nozzle.bbs.LRPsDesired{deployment: <%= metron_agent_diego_deployment %>}"
-          },
-          {
-            "q": "datadog.nozzle.bbs.LRPsClaimed{deployment: <%= metron_agent_diego_deployment %>}"
-          },
-          {
-            "q": "avg:datadog.nozzle.bbs.LRPsUnclaimed{deployment: <%= metron_agent_diego_deployment %>}"
-          },
-          {
-            "q": "datadog.nozzle.bbs.LRPsRunning{deployment: <%= metron_agent_diego_deployment %>}"
-          },
-          {
-            "q": "datadog.nozzle.bbs.CrashedActualLRPs{deployment: <%= metron_agent_diego_deployment %>}"
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
           }
         ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "BBS: Non-Running LRPs",
-      "definition":{
-        "requests": [
-          {
-            "q": "datadog.nozzle.bbs.LRPsClaimed{deployment: <%= metron_agent_diego_deployment %>}"
-          },
-          {
-            "q": "avg:datadog.nozzle.bbs.LRPsUnclaimed{deployment: <%= metron_agent_diego_deployment %>}"
-          },
-          {
-            "q": "datadog.nozzle.bbs.CrashedActualLRPs{deployment: <%= metron_agent_diego_deployment %>}"
-          },
-          {
-            "q": "datadog.nozzle.bbs.SuspectRunningActualLRPs{deployment: <%= metron_agent_diego_deployment %>}"
-          },
-          {
-            "q": "datadog.nozzle.bbs.SuspectClaimedActualLRPs{deployment: <%= metron_agent_diego_deployment %>}"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "BBS: Missing and Extra LRPs",
-      "definition":{
-        "requests": [
-          {
-            "q": "datadog.nozzle.bbs.LRPsMissing{deployment: <%= metron_agent_diego_deployment %>}"
-          },
-          {
-            "q": "datadog.nozzle.bbs.LRPsExtra{deployment: <%= metron_agent_diego_deployment %>}"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "BBS: Tasks",
-      "definition":{
-        "requests":[
-          {
-            "q": "avg:datadog.nozzle.bbs.TasksPending{deployment:<%= metron_agent_diego_deployment %>}"
-          },
-          {
-            "q": "avg:datadog.nozzle.bbs.TasksClaimed{deployment:<%= metron_agent_diego_deployment %>}"
-          },
-          {
-            "q": "avg:datadog.nozzle.bbs.TasksRunning{deployment:<%= metron_agent_diego_deployment %>}"
-          },
-          {
-            "q": "avg:datadog.nozzle.bbs.TasksCompleted{deployment:<%= metron_agent_diego_deployment %>}"
-          },
-          {
-            "q": "avg:datadog.nozzle.bbs.TasksResolving{deployment:<%= metron_agent_diego_deployment %>}"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "BBS: Cell Presence",
-      "definition":{
-        "requests": [
-          {
-            "q": "datadog.nozzle.bbs.PresentCells{deployment: <%= metron_agent_diego_deployment %>}"
-          },
-          {
-            "q": "datadog.nozzle.bbs.SuspectCells{deployment: <%= metron_agent_diego_deployment %>}"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Canary App Instance Count",
-      "definition":{
-        "requests":[
-          {
-            "q": "sum:diego.canary.app.instance{deployment:<%= metron_agent_diego_deployment %>}",
-            "type": "line"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Cell Rep: Garden Unhealthy",
-      "definition":{
-        "requests":[
-          {
-            "q": "sum:datadog.nozzle.rep.GardenHealthCheckFailed{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
-            "type": "bars"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Cell Rep: Available Memory",
-      "definition":{
-        "requests":[
-          {
-            "q": "(min:datadog.nozzle.rep.CapacityRemainingMemory{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}) / 0.000001024",
-            "type": "bars"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Cell Rep: Available Disk",
-      "definition":{
-        "requests":[
-          {
-            "q": "(min:datadog.nozzle.rep.CapacityRemainingDisk{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}) / 0.000001048576",
-            "type": "bars"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "BBS: Locket Lock Held",
-      "definition":{
-        "requests": [
-          {
-            "q": "datadog.nozzle.bbs.LockHeld{deployment: <%= metron_agent_diego_deployment %>} by {job,index,ip}",
-            "type": "bars"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "BBS: Request Count (per minute)",
-      "definition":{
-        "viz": "timeseries",
-        "requests": [
-          {
-            "q": "per_minute(avg:datadog.nozzle.bbs.RequestCount{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
-            "type": "line"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "BBS: Request Latency (seconds)",
-      "definition":{
-        "viz": "timeseries",
-        "requests": [
-          {
-            "q": "max:datadog.nozzle.bbs.RequestLatency{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}/1000000000",
-            "type": "line"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "BBS: Time To Converge (seconds)",
-      "definition":{
-        "requests": [
-          {
-            "q": "sum:datadog.nozzle.bbs.ConvergenceLRPDuration{deployment:<%= metron_agent_diego_deployment %>}/1000000000",
-            "type": "line"
-          },
-          {
-            "q": "sum:datadog.nozzle.bbs.ConvergenceTaskDuration{deployment:<%= metron_agent_diego_deployment %>}/1000000000",
-            "type": "line"
-          }
-        ],
-        "viz": "timeseries",
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "BBS: cf-apps Domain Freshness (bool)",
-      "definition":{
-        "requests":[
-          {
-            "q": "max:datadog.nozzle.bbs.Domain.cf_apps{deployment:<%= metron_agent_diego_deployment %>}",
-            "type": "bars"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Locket: Active Locks",
-      "definition":{
-        "requests":[
-          {
-            "q": "avg:datadog.nozzle.locket.ActiveLocks{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
-            "type": "line"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Locket: Active Presences",
-      "definition":{
-        "requests":[
-          {
-            "q": "avg:datadog.nozzle.locket.ActivePresences{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
-            "type": "line"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Locket: Locks Expired",
-      "definition":{
-        "requests":[
-          {
-            "q": "avg:datadog.nozzle.locket.LocksExpired{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
-            "type": "line"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Locket: Presence Expired",
-      "definition":{
-        "requests":[
-          {
-            "q": "avg:datadog.nozzle.locket.PresenceExpired{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
-            "type": "line"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Locket: Request Latency (seconds)",
-      "definition":{
-        "viz": "timeseries",
-        "requests": [
-          {
-            "q": "max:datadog.nozzle.locket.RequestLatencyMax{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}/1000000000",
-            "type": "line"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Route Emitter: Total Routes",
-      "definition":{
-          "viz": "timeseries",
-          "requests": [
-          {
-            "q": "avg:datadog.nozzle.route_emitter.RoutesTotal{deployment:<%= metron_agent_diego_deployment %>}"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Local Route Emitter: Total HTTP Routes",
-      "definition":{
-        "requests":[
-          {
-            "q": "(min:datadog.nozzle.route_emitter.HTTPRouteCount{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
-            "type": "bars"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Local Route Emitter: Total TCP Routes",
-      "definition":{
-        "requests":[
-          {
-            "q": "(min:datadog.nozzle.route_emitter.TCPRouteCount{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
-            "type": "bars"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Auctioneer: Locket Lock Held",
-      "definition":{
-        "requests": [
-          {
-            "q": "datadog.nozzle.auctioneer.LockHeld{deployment: <%= metron_agent_diego_deployment %>} by {job,index,ip}",
-            "type": "bars"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Auctioneer: Request Count (per minute)",
-      "definition":{
-        "viz": "timeseries",
-        "requests": [
-          {
-            "q": "per_minute(avg:datadog.nozzle.auctioneer.RequestCount{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
-            "type": "line"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Auctioneer: Request Latency (seconds)",
-      "definition":{
-        "viz": "timeseries",
-        "requests": [
-          {
-            "q": "max:datadog.nozzle.auctioneer.RequestLatency{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}/1000000000",
-            "type": "line"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Auctioneer: LRP Auctions (per minute)",
-      "definition":{
-          "viz": "timeseries",
-          "requests": [
-          {
-            "q": "per_minute(datadog.nozzle.auctioneer.AuctioneerLRPAuctionsStarted{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
-            "type": "line"
-          },
-          {
-            "q": "per_minute(datadog.nozzle.auctioneer.AuctioneerLRPAuctionsFailed{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
-            "type": "line"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Auctioneer: Task Auctions (per minute)",
-      "definition":{
-          "viz": "timeseries",
-          "requests": [
-          {
-            "q": "per_minute(datadog.nozzle.auctioneer.AuctioneerTaskAuctionsStarted{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
-            "type": "line"
-          },
-          {
-            "q": "per_minute(datadog.nozzle.auctioneer.AuctioneerTaskAuctionsFailed{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
-            "type": "line"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Auctioneer: Fetch Cell States Duration (seconds)",
-      "definition":{
-        "requests": [
-          {
-            "q": "max:datadog.nozzle.auctioneer.AuctioneerFetchStatesDuration{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}/1000000000",
-            "type": "line"
-          }
-        ],
-        "viz": "timeseries",
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "BBS: LRP Convergence Actions Taken (per minute)",
-      "definition":{
-        "requests": [
-          {
-            "q": "per_minute(sum:datadog.nozzle.bbs.ConvergenceLRPRuns{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
-            "type": "line"
-          }
-        ],
-        "viz": "timeseries",
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "BBS: Task Convergence Actions Taken (per minute)",
-      "definition":{
-        "requests": [
-          {
-            "q": "per_minute(sum:datadog.nozzle.bbs.ConvergenceTaskRuns{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
-            "type": "line"
-          },
-          {
-            "q": "per_minute(sum:datadog.nozzle.bbs.ConvergenceTasksKicked{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
-            "type": "line"
-          },
-          {
-            "q": "per_minute(sum:datadog.nozzle.bbs.ConvergenceTasksPruned{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
-            "type": "line"
-          }
-        ],
-        "viz": "timeseries",
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "BBS: Master Elections",
-      "definition":{
-        "viz": "timeseries",
-        "requests": [
-          {
-            "q": "avg:datadog.nozzle.bbs.BBSMasterElected{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
-            "type": "bars"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "BBS: Migration Duration (seconds)",
-      "definition":{
-        "viz": "timeseries",
-        "requests": [
-          {
-            "q": "max:datadog.nozzle.bbs.MigrationDuration{deployment:<%= metron_agent_diego_deployment %>}by {job,index,ip}/1000000000",
-            "type": "bars"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "BBS: Encryption Duration (seconds)",
-      "definition":{
-        "viz": "timeseries",
-        "requests": [
-          {
-            "q": "max:datadog.nozzle.bbs.EncryptionDuration{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}/1000000000",
-            "type": "bars"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "BBS: Open File Descriptors",
-      "definition":{
-        "requests":[
-          {
-            "q": "avg:datadog.nozzle.bbs.OpenFileDescriptors{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
-            "type": "line"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Cell Rep: Starting Containers",
-      "definition":{
-        "requests":[
-          {
-            "q": "(min:datadog.nozzle.rep.StartingContainerCount{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
-            "type": "bars"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Cell Rep: Bulk Duration (seconds)",
-      "definition":{
-        "requests": [
-          {
-            "q": "max:datadog.nozzle.rep.RepBulkSyncDuration{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip} /1000000000",
-            "type": "line"
-          }
-        ],
-        "viz": "timeseries",
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Cell Rep: Stalled Garden Duration (seconds)",
-      "definition":{
-        "requests": [
-          {
-            "q": "max:datadog.nozzle.rep.StalledGardenDuration{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip} /1000000000",
-            "type": "line"
-          }
-        ],
-        "viz": "timeseries",
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Cell Rep: Stranded Evacuating ActualLRPs",
-      "definition":{
-        "requests":[
-          {
-            "q": "(min:datadog.nozzle.rep.StrandedEvacuatingActualLRPs{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
-            "type": "bars"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Cell Rep: State Request Latency (seconds)",
-      "definition":{
-        "viz": "timeseries",
-        "requests": [
-          {
-            "q": "max:datadog.nozzle.rep.RequestLatencyMax{deployment:<%= metron_agent_diego_deployment %>,request-type:state} by {job,index,ip}/1000000000",
-            "type": "line"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Cell Rep: Container Setup Succeeded Duration (seconds)",
-      "definition":{
-        "viz": "heatmap",
-        "requests": [
-          {
-            "q": "avg:datadog.nozzle.rep.ContainerSetupSucceededDuration{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}.rollup(max).fill(null)/1000000000",
-            "style": {
-              "palette": "cool",
-              "type": "solid",
-              "width": "normal"
-            }
-          }
-        ]
-      }
-    },
-    {
-      "title": "Cell Rep: Container Setup Failed Duration (seconds)",
-      "definition":{
-        "viz": "heatmap",
-        "requests": [
-          {
-            "q": "avg:datadog.nozzle.rep.ContainerSetupFailedDuration{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}.rollup(max).fill(null)/1000000000",
-            "style": {
-              "palette": "cool",
-              "type": "solid",
-              "width": "normal"
-            }
-          }
-        ]
-      }
-    },
-    {
-      "title": "Cell Rep: Garden Container Creation Succeeded Duration (seconds)",
-      "definition":{
-        "viz": "timeseries",
-        "requests": [
-          {
-            "q": "avg:datadog.nozzle.rep.GardenContainerCreationSucceededDuration{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip} / 1000000000",
-            "type": "line"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Cell Rep: Garden Container Creation Failed Duration (seconds)",
-      "definition":{
-        "viz": "timeseries",
-        "requests": [
-          {
-            "q": "avg:datadog.nozzle.rep.GardenContainerCreationFailedDuration{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip} / 1000000000",
-            "type": "line"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Cell Rep: Garden Container Destruction Succeeded Duration (seconds)",
-      "definition":{
-        "viz": "timeseries",
-        "requests": [
-          {
-            "q": "avg:datadog.nozzle.rep.GardenContainerDestructionSucceededDuration{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip} / 1000000000",
-            "type": "line"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Cell Rep: Garden Container Destruction Failed Duration (seconds)",
-      "definition":{
-        "viz": "timeseries",
-        "requests": [
-          {
-            "q": "avg:datadog.nozzle.rep.GardenContainerDestructionFailedDuration{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip} / 1000000000",
-            "type": "line"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Cell Rep: Credential Creation Succeeded Count (per minute)",
-      "definition":{
-        "viz": "timeseries",
-        "requests": [
-          {
-            "q": "per_minute(avg:datadog.nozzle.rep.CredCreationSucceededCount{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Cell Rep: Credential Creation Failed Count (per minute)",
-      "definition":{
-        "viz": "timeseries",
-        "requests": [
-          {
-            "q": "per_minute(avg:datadog.nozzle.rep.CredCreationFailedCount{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Cell Rep: Credential Creation Succeeded Duration (seconds)",
-      "definition":{
-        "viz": "timeseries",
-        "requests": [
-          {
-            "q": "avg:datadog.nozzle.rep.CredCreationSucceededDuration{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip} / 1000000000",
-            "type": "line"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Route Emitter: Incremental Updates (per second)",
-      "definition":{
-          "viz": "timeseries",
-          "requests": [
-          {
-            "q": "rate(datadog.nozzle.route_emitter.RoutesRegistered{deployment:<%= metron_agent_diego_deployment %>})"
-          },
-          {
-            "q": "-rate(datadog.nozzle.route_emitter.RoutesUnregistered{deployment:<%= metron_agent_diego_deployment %>})"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "Route Emitter: Bulk Duration (seconds)",
-      "definition":{
-        "requests": [
-          {
-            "q": "max:datadog.nozzle.route_emitter.RouteEmitterSyncDuration{deployment:<%= metron_agent_diego_deployment %>}/1000000000",
-            "type": "line"
-          }
-        ],
-        "viz": "timeseries",
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "SSH Proxy: SSH Connections",
-      "definition":{
-        "requests": [
-          {
-            "q": "avg:datadog.nozzle.ssh_proxy.ssh_connections{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
-            "type": "line"
-          }
-        ],
-        "viz": "timeseries",
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "BOSH VMs: System Memory Percent",
-      "definition":{
-          "viz": "timeseries",
-          "requests": [
-          {
-            "q": "bosh.healthmonitor.system.mem.percent{deployment:<%= diego_deployment %>} by {job,id,index}",
-            "type": "line"
-          }
-        ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ],
+        "legend_size": "0",
         "markers": [
           {
-            "value": "y > 80",
-            "type": "error bold"
+            "type": "error bold",
+            "value": "y > 80"
           },
           {
-            "value": "y < 80",
-            "type": "ok dashed"
-          }
-        ]
-      }
-    },
-    {
-      "title": "BOSH VMs: Load Average (1m)",
-      "definition":{
-          "viz": "timeseries",
-          "requests": [
-          {
-            "q": "bosh.healthmonitor.system.load.1m{deployment:<%= diego_deployment %>} by {job,id,index}",
-            "type": "line"
+            "type": "ok dashed",
+            "value": "y < 80"
           }
         ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    },
-    {
-      "title": "BOSH VMs: CPU System",
-      "definition":{
-          "viz": "timeseries",
-          "requests": [
+        "requests": [
           {
             "q": "bosh.healthmonitor.system.cpu.sys{deployment:<%= diego_deployment %>} by {job,id,index}",
             "type": "line"
           }
         ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ],
-        "markers": [
-          {
-            "value": "y > 80",
-            "type": "error bold"
-          },
-          {
-            "value": "y < 80",
-            "type": "ok dashed"
-          }
-        ]
-      }
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "BOSH VMs: CPU System"
     },
     {
-      "title": "BOSH VMs: CPU User",
-      "definition":{
-          "viz": "timeseries",
-          "requests": [
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "markers": [
+          {
+            "type": "error bold",
+            "value": "y > 80"
+          },
+          {
+            "type": "ok dashed",
+            "value": "y < 80"
+          }
+        ],
+        "requests": [
           {
             "q": "bosh.healthmonitor.system.cpu.user{deployment:<%= diego_deployment %>} by {job,id,index}",
             "type": "line"
           }
         ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ],
-        "markers": [
-          {
-            "value": "y > 80",
-            "type": "error bold"
-          },
-          {
-            "value": "y < 80",
-            "type": "ok dashed"
-          }
-        ]
-      }
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "BOSH VMs: CPU User"
     },
     {
-      "title": "BOSH VMs: CPU Wait",
-      "definition":{
-          "viz": "timeseries",
-          "requests": [
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "markers": [
+          {
+            "type": "error bold",
+            "value": "y > 80"
+          },
+          {
+            "type": "ok dashed",
+            "value": "y < 80"
+          }
+        ],
+        "requests": [
           {
             "q": "bosh.healthmonitor.system.cpu.wait{deployment:<%= diego_deployment %>} by {job,id,index}",
             "type": "line"
           }
         ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ],
-        "markers": [
-          {
-            "value": "y > 80",
-            "type": "error bold"
-          },
-          {
-            "value": "y < 80",
-            "type": "ok dashed"
-          }
-        ]
-      }
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "BOSH VMs: CPU Wait"
     },
     {
-      "title": "BOSH VMs: System Disk Percent",
-      "definition":{
-          "viz": "timeseries",
-          "requests": [
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "markers": [
+          {
+            "type": "error bold",
+            "value": "y > 80"
+          },
+          {
+            "type": "ok dashed",
+            "value": "y < 80"
+          }
+        ],
+        "requests": [
           {
             "q": "bosh.healthmonitor.system.disk.system.percent{deployment:<%= diego_deployment %>} by {job,id,index}",
             "type": "line"
           }
         ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ],
-        "markers": [
-          {
-            "value": "y > 80",
-            "type": "error bold"
-          },
-          {
-            "value": "y < 80",
-            "type": "ok dashed"
-          }
-        ]
-      }
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "BOSH VMs: System Disk Percent"
     },
     {
-      "title": "BOSH VMs: Ephemeral Disk Percent",
-      "definition":{
-          "viz": "timeseries",
-          "requests": [
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "markers": [
+          {
+            "type": "error bold",
+            "value": "y > 80"
+          },
+          {
+            "type": "ok dashed",
+            "value": "y < 80"
+          }
+        ],
+        "requests": [
+          {
+            "q": "bosh.healthmonitor.system.mem.percent{deployment:<%= diego_deployment %>} by {job,id,index}",
+            "type": "line"
+          }
+        ],
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "BOSH VMs: System Memory Percent"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "requests": [
+          {
+            "q": "(min:datadog.nozzle.CapacityRemainingDisk{origin:rep,deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}) / 0.000001048576",
+            "type": "bars"
+          }
+        ],
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "Cell Rep: Available Disk"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "requests": [
+          {
+            "q": "(min:datadog.nozzle.CapacityRemainingMemory{origin:rep,deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}) / 0.000001024",
+            "type": "bars"
+          }
+        ],
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "Cell Rep: Available Memory"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.ActiveLocks{origin:locket,deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "line"
+          }
+        ],
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "Locket: Active Locks"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.ActivePresences{origin:locket,deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "line"
+          }
+        ],
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "Locket: Active Presences"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.BBSMasterElected{origin:bbs,deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "bars"
+          }
+        ],
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "BBS: Master Elections"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.LRPsUnclaimed{origin:bbs,deployment: <%= metron_agent_diego_deployment %>}"
+          },
+          {
+            "q": "datadog.nozzle.CrashedActualLRPs{origin:bbs,deployment: <%= metron_agent_diego_deployment %>}"
+          },
+          {
+            "q": "datadog.nozzle.LRPsClaimed{origin:bbs,deployment: <%= metron_agent_diego_deployment %>}"
+          },
+          {
+            "q": "datadog.nozzle.LRPsDesired{origin:bbs,deployment: <%= metron_agent_diego_deployment %>}"
+          },
+          {
+            "q": "datadog.nozzle.LRPsRunning{origin:bbs,deployment: <%= metron_agent_diego_deployment %>}"
+          }
+        ],
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "BBS: LRPs"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.LRPsUnclaimed{origin:bbs,deployment: <%= metron_agent_diego_deployment %>}"
+          },
+          {
+            "q": "datadog.nozzle.CrashedActualLRPs{origin:bbs,deployment: <%= metron_agent_diego_deployment %>}"
+          },
+          {
+            "q": "datadog.nozzle.LRPsClaimed{origin:bbs,deployment: <%= metron_agent_diego_deployment %>}"
+          },
+          {
+            "q": "datadog.nozzle.SuspectClaimedActualLRPs{origin:bbs,deployment: <%= metron_agent_diego_deployment %>}"
+          },
+          {
+            "q": "datadog.nozzle.SuspectRunningActualLRPs{origin:bbs,deployment: <%= metron_agent_diego_deployment %>}"
+          }
+        ],
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "BBS: Non-Running LRPs"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.LocksExpired{origin:locket,deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "line"
+          }
+        ],
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "Locket: Locks Expired"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.OpenFileDescriptors{origin:bbs,deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "line"
+          }
+        ],
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "BBS: Open File Descriptors"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.PresenceExpired{origin:locket,deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "line"
+          }
+        ],
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "Locket: Presence Expired"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.TasksClaimed{origin:bbs,deployment:<%= metron_agent_diego_deployment %>}"
+          },
+          {
+            "q": "avg:datadog.nozzle.TasksCompleted{origin:bbs,deployment:<%= metron_agent_diego_deployment %>}"
+          },
+          {
+            "q": "avg:datadog.nozzle.TasksPending{origin:bbs,deployment:<%= metron_agent_diego_deployment %>}"
+          },
+          {
+            "q": "avg:datadog.nozzle.TasksResolving{origin:bbs,deployment:<%= metron_agent_diego_deployment %>}"
+          },
+          {
+            "q": "avg:datadog.nozzle.TasksRunning{origin:bbs,deployment:<%= metron_agent_diego_deployment %>}"
+          }
+        ],
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "BBS: Tasks"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.ssh_connections{origin:ssh_proxy,deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "line"
+          }
+        ],
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "SSH Proxy: SSH Connections"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "requests": [
           {
             "q": "bosh.healthmonitor.system.disk.ephemeral.percent{deployment:<%= diego_deployment %>} by {job,id,index}",
             "type": "line"
           }
         ],
-        "events":[
-          {
-            "q": "<%= bosh_event_query_string %>"
-          }
-        ]
-      }
-    }
-    <%
-    [
-      {:prefix => "API and Brain", :processes => ["auctioneer", "bbs", "file_server", "locket", "ssh_proxy"]},
-      {:prefix => "Cell", :processes => ["garden_linux", "rep", "route_emitter"]},
-      {:prefix => "CC-Bridge", :processes => ["cc_uploader","nsync_bulker", "nsync_listener", "stager", "tps_listener", "tps_watcher"]},
-    ].each do |group|
-    [
-      {:title => "Go: Heap (bytes)", :metric => "memoryStats.numBytesAllocatedHeap"},
-      {:title => "Go: Stack (bytes)", :metric => "memoryStats.numBytesAllocatedStack"},
-      {:title => "Go: GC Pause Time (NS)", :metric => "memoryStats.lastGCPauseTimeNS"},
-      {:title => "Go: # Goroutines", :metric => "numGoRoutines"},
-    ].each do |metric|
-      requests = group[:processes].map { |process|
-        {
-          "q" => "datadog.nozzle.#{process}.#{metric[:metric]}{deployment:#{metron_agent_diego_deployment}} by {job,index,ip}",
-          "type" => "line",
-        }
-      }
-    %>
-    ,
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "BOSH VMs: Ephemeral Disk Percent"
+    },
     {
-      "title": "<%= group[:prefix] + " " + metric[:title] %>",
-      "definition":{
-        "requests": <%= requests.to_json %>,
-        "events":[
+      "definition": {
+        "events": [
           {
-            "q": "<%= bosh_event_query_string %>"
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
           }
-        ]
-      }
+        ],
+        "legend_size": "0",
+        "requests": [
+          {
+            "q": "bosh.healthmonitor.system.load.1m{deployment:<%= diego_deployment %>} by {job,id,index}",
+            "type": "line"
+          }
+        ],
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "BOSH VMs: Load Average (1m)"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "requests": [
+          {
+            "q": "datadog.nozzle.LRPsExtra{origin:bbs,deployment: <%= metron_agent_diego_deployment %>}"
+          },
+          {
+            "q": "datadog.nozzle.LRPsMissing{origin:bbs,deployment: <%= metron_agent_diego_deployment %>}"
+          }
+        ],
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "BBS: Missing and Extra LRPs"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "requests": [
+          {
+            "q": "datadog.nozzle.LockHeld{origin:auctioneer,deployment: <%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "bars"
+          }
+        ],
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "Auctioneer: Locket Lock Held"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "requests": [
+          {
+            "q": "datadog.nozzle.LockHeld{origin:bbs,deployment: <%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "bars"
+          }
+        ],
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "BBS: Locket Lock Held"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "requests": [
+          {
+            "q": "datadog.nozzle.PresentCells{origin:bbs,deployment: <%= metron_agent_diego_deployment %>}"
+          },
+          {
+            "q": "datadog.nozzle.SuspectCells{origin:bbs,deployment: <%= metron_agent_diego_deployment %>}"
+          }
+        ],
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "BBS: Cell Presence"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "requests": [
+          {
+            "q": "datadog.nozzle.cc_uploader.memoryStats.lastGCPauseTimeNS{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "line"
+          },
+          {
+            "q": "datadog.nozzle.nsync_bulker.memoryStats.lastGCPauseTimeNS{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "line"
+          },
+          {
+            "q": "datadog.nozzle.nsync_listener.memoryStats.lastGCPauseTimeNS{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "line"
+          },
+          {
+            "q": "datadog.nozzle.stager.memoryStats.lastGCPauseTimeNS{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "line"
+          },
+          {
+            "q": "datadog.nozzle.tps_listener.memoryStats.lastGCPauseTimeNS{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "line"
+          },
+          {
+            "q": "datadog.nozzle.tps_watcher.memoryStats.lastGCPauseTimeNS{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "line"
+          }
+        ],
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "CC-Bridge Go: GC Pause Time (NS)"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "requests": [
+          {
+            "q": "datadog.nozzle.garden_linux.numGoRoutines{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "line"
+          },
+          {
+            "q": "datadog.nozzle.rep.numGoRoutines{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "line"
+          },
+          {
+            "q": "datadog.nozzle.route_emitter.numGoRoutines{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "type": "line"
+          }
+        ],
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "Cell Go: # Goroutines"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "requests": [
+          {
+            "q": "max:datadog.nozzle.AuctioneerFetchStatesDuration{origin:auctioneer,deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}/1000000000",
+            "type": "line"
+          }
+        ],
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "Auctioneer: Fetch Cell States Duration (seconds)"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "requests": [
+          {
+            "q": "max:datadog.nozzle.Domain.cf_apps{origin:bbs,deployment:<%= metron_agent_diego_deployment %>}",
+            "type": "bars"
+          }
+        ],
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "BBS: cf-apps Domain Freshness (bool)"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "requests": [
+          {
+            "q": "max:datadog.nozzle.MigrationDuration{origin:bbs,deployment:<%= metron_agent_diego_deployment %>}by {job,index,ip}/1000000000",
+            "type": "bars"
+          }
+        ],
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "BBS: Migration Duration (seconds)"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "requests": [
+          {
+            "q": "max:datadog.nozzle.RequestLatencyMax{origin:locket,deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}/1000000000",
+            "type": "line"
+          }
+        ],
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "Locket: Request Latency (seconds)"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "requests": [
+          {
+            "q": "max:datadog.nozzle.RequestLatency{origin:auctioneer,deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}/1000000000",
+            "type": "line"
+          }
+        ],
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "Auctioneer: Request Latency (seconds)"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "requests": [
+          {
+            "q": "max:datadog.nozzle.RequestLatency{origin:bbs,deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}/1000000000",
+            "type": "line"
+          }
+        ],
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "BBS: Request Latency (seconds)"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "requests": [
+          {
+            "q": "per_minute(avg:datadog.nozzle.RequestCount{origin:auctioneer,deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
+            "type": "line"
+          }
+        ],
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "Auctioneer: Request Count (per minute)"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "requests": [
+          {
+            "q": "per_minute(avg:datadog.nozzle.RequestCount{origin:bbs,deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
+            "type": "line"
+          }
+        ],
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "BBS: Request Count (per minute)"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "requests": [
+          {
+            "q": "per_minute(datadog.nozzle.AuctioneerLRPAuctionsFailed{origin:auctioneer,deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
+            "type": "line"
+          },
+          {
+            "q": "per_minute(datadog.nozzle.AuctioneerLRPAuctionsStarted{origin:auctioneer,deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
+            "type": "line"
+          }
+        ],
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "Auctioneer: LRP Auctions (per minute)"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "requests": [
+          {
+            "q": "per_minute(datadog.nozzle.AuctioneerTaskAuctionsFailed{origin:auctioneer,deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
+            "type": "line"
+          },
+          {
+            "q": "per_minute(datadog.nozzle.AuctioneerTaskAuctionsStarted{origin:auctioneer,deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
+            "type": "line"
+          }
+        ],
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "Auctioneer: Task Auctions (per minute)"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "requests": [
+          {
+            "q": "per_minute(sum:datadog.nozzle.ConvergenceLRPRuns{origin:bbs,deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
+            "type": "line"
+          }
+        ],
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "BBS: LRP Convergence Actions Taken (per minute)"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "requests": [
+          {
+            "q": "per_minute(sum:datadog.nozzle.ConvergenceTaskRuns{origin:bbs,deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
+            "type": "line"
+          },
+          {
+            "q": "per_minute(sum:datadog.nozzle.ConvergenceTasksKicked{origin:bbs,deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
+            "type": "line"
+          },
+          {
+            "q": "per_minute(sum:datadog.nozzle.ConvergenceTasksPruned{origin:bbs,deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip})",
+            "type": "line"
+          }
+        ],
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "BBS: Task Convergence Actions Taken (per minute)"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "requests": [
+          {
+            "q": "sum:datadog.nozzle.ConvergenceLRPDuration{origin:bbs,deployment:<%= metron_agent_diego_deployment %>}/1000000000",
+            "type": "line"
+          },
+          {
+            "q": "sum:datadog.nozzle.ConvergenceTaskDuration{origin:bbs,deployment:<%= metron_agent_diego_deployment %>}/1000000000",
+            "type": "line"
+          }
+        ],
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "BBS: Time To Converge (seconds)"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "legend_size": "0",
+        "requests": [
+          {
+            "q": "sum:diego.canary.app.instance{deployment:<%= diego_deployment %>}",
+            "type": "line"
+          }
+        ],
+        "show_legend": false,
+        "viz": "timeseries"
+      },
+      "title": "Canary App Instance Count"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "requests": [
+          {
+            "q": "(min:datadog.nozzle.HTTPRouteCount{origin:route_emitter} by {job,index,ip})",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "bars"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "Local Route Emitter: Total HTTP Routes"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "requests": [
+          {
+            "q": "(min:datadog.nozzle.StartingContainerCount{origin:rep} by {job,index,ip})",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "bars"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "Cell Rep: Starting Containers"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "requests": [
+          {
+            "q": "(min:datadog.nozzle.StrandedEvacuatingActualLRPs{origin:rep} by {job,index,ip})",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "bars"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "Cell Rep: Stranded Evacuating ActualLRPs"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "requests": [
+          {
+            "q": "(min:datadog.nozzle.TCPRouteCount{origin:route_emitter} by {job,index,ip})",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "bars"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "Local Route Emitter: Total TCP Routes"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "requests": [
+          {
+            "q": "-rate(avg:datadog.nozzle.RoutesUnregistered{origin:route_emitter})",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "rate(avg:datadog.nozzle.RoutesRegistered{origin:route_emitter})",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "Route Emitter: Incremental Updates (per second)"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.RoutesTotal{origin:route_emitter}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "Route Emitter: Total Routes"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.memoryStats.lastGCPauseTimeNS{origin:auctioneer} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.memoryStats.lastGCPauseTimeNS{origin:bbs} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.memoryStats.lastGCPauseTimeNS{origin:file_server} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.memoryStats.lastGCPauseTimeNS{origin:locket} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.memoryStats.lastGCPauseTimeNS{origin:ssh_proxy} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "API and Brain Go: GC Pause Time (NS)"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.memoryStats.lastGCPauseTimeNS{origin:garden-linux} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.memoryStats.lastGCPauseTimeNS{origin:rep} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.memoryStats.lastGCPauseTimeNS{origin:route_emitter} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "Cell Go: GC Pause Time (NS)"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.memoryStats.numBytesAllocatedHeap{origin:auctioneer} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.memoryStats.numBytesAllocatedHeap{origin:bbs} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.memoryStats.numBytesAllocatedHeap{origin:file_server} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.memoryStats.numBytesAllocatedHeap{origin:locket} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.memoryStats.numBytesAllocatedHeap{origin:ssh_proxy} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "API and Brain Go: Heap (bytes)"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.memoryStats.numBytesAllocatedHeap{origin:cc_uploader} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.memoryStats.numBytesAllocatedHeap{origin:tps_watcher} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.nsync_bulker.memoryStats.numBytesAllocatedHeap{*} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.nsync_listener.memoryStats.numBytesAllocatedHeap{*} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.stager.memoryStats.numBytesAllocatedHeap{*} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.tps_listener.memoryStats.numBytesAllocatedHeap{*} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "CC-Bridge Go: Heap (bytes)"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.memoryStats.numBytesAllocatedHeap{origin:garden-linux} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.memoryStats.numBytesAllocatedHeap{origin:rep} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.memoryStats.numBytesAllocatedHeap{origin:route_emitter} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "datadog.nozzle.memoryStats.numBytesAllocatedHeap, datadog.nozzle.memoryStats...."
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.memoryStats.numBytesAllocatedStack{origin:auctioneer} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.memoryStats.numBytesAllocatedStack{origin:bbs} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.memoryStats.numBytesAllocatedStack{origin:file_server} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.memoryStats.numBytesAllocatedStack{origin:locket} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.memoryStats.numBytesAllocatedStack{origin:ssh_proxy} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "API and Brain Go: Stack (bytes)"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.memoryStats.numBytesAllocatedStack{origin:cc_uploader} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.memoryStats.numBytesAllocatedStack{origin:tps_watcher} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.nsync_bulker.memoryStats.numBytesAllocatedStack{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.nsync_listener.memoryStats.numBytesAllocatedStack{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.stager.memoryStats.numBytesAllocatedStack{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.tps_listener.memoryStats.numBytesAllocatedStack{deployment:<%= metron_agent_diego_deployment %>} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "CC-Bridge Go: Stack (bytes)"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.memoryStats.numBytesAllocatedStack{origin:garden-linux} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.memoryStats.numBytesAllocatedStack{origin:rep} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.memoryStats.numBytesAllocatedStack{origin:route_emitter} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "Cell Go: Stack (bytes)"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.nsync_bulker.numGoRoutines{*} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.nsync_listener.numGoRoutines{*} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.numGoRoutines{origin:cc_uploader} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.numGoRoutines{origin:tps_watcher} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.stager.numGoRoutines{*} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.tps_listener.numGoRoutines{*} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "CC-Bridge Go: # Goroutines"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.numGoRoutines{origin:auctioneer} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.numGoRoutines{origin:bbs} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.numGoRoutines{origin:file_server} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.numGoRoutines{origin:locket} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          },
+          {
+            "q": "avg:datadog.nozzle.numGoRoutines{origin:ssh_proxy} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "API and Brain Go: # Goroutines"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "requests": [
+          {
+            "q": "max:datadog.nozzle.EncryptionDuration{origin:bbs} by {job,index,ip}/1000000000",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "bars"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "BBS: Encryption Duration (seconds)"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "requests": [
+          {
+            "q": "max:datadog.nozzle.RepBulkSyncDuration{origin:rep} by {job,index,ip}/1000000000",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "Cell Rep: Bulk Duration (seconds)"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "requests": [
+          {
+            "q": "max:datadog.nozzle.RequestLatencyMax{origin:rep,request-type:state} by {job,index,ip}/1000000000",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "Cell Rep: State Request Latency (seconds)"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "requests": [
+          {
+            "q": "max:datadog.nozzle.RouteEmitterSyncDuration{origin:route_emitter}/1000000000",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "Route Emitter: Bulk Duration (seconds)"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "requests": [
+          {
+            "q": "max:datadog.nozzle.StalledGardenDuration{origin:rep} by {job,index,ip}/1000000000",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "Cell Rep: Stalled Garden Duration (seconds)"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "requests": [
+          {
+            "q": "per_minute(avg:datadog.nozzle.CredCreationFailedCount{origin:rep} by {job,index,ip})",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "area"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "Cell Rep: Credential Creation Failed Count (per minute)"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "requests": [
+          {
+            "q": "per_minute(avg:datadog.nozzle.CredCreationSucceededCount{origin:rep} by {job,index,ip})",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "area"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "Cell Rep: Credential Creation Succeeded Count (per minute)"
+    },
+    {
+      "definition": {
+        "events": [
+          {
+            "q": "\"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\" OR \"Begin update deployment for '<%= diego_deployment %>' against Director\" OR \"Finish update deployment for '<%= diego_deployment %>' against Director\" OR \"Error during update deployment for '<%= diego_deployment %>' against Director\""
+          }
+        ],
+        "requests": [
+          {
+            "q": "sum:datadog.nozzle.GardenHealthCheckFailed{origin:rep} by {job,index,ip}",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "bars"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "Cell Rep: Garden Unhealthy"
+    },
+    {
+      "definition": {
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.ContainerSetupFailedDuration{origin:rep} by {job,index,ip}.rollup(max).fill(null)/1000000000",
+            "style": {
+              "palette": "cool"
+            }
+          }
+        ],
+        "viz": "heatmap"
+      },
+      "title": "Cell Rep: Container Setup Failed Duration (seconds)"
+    },
+    {
+      "definition": {
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.ContainerSetupSucceededDuration{origin:rep} by {job,index,ip}.rollup(max).fill(null)/1000000000",
+            "style": {
+              "palette": "cool"
+            }
+          }
+        ],
+        "viz": "heatmap"
+      },
+      "title": "Cell Rep: Container Setup Succeeded Duration (seconds)"
+    },
+    {
+      "definition": {
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.CredCreationSucceededDuration{origin:rep} by {job,index,ip}/1000000000",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "Cell Rep: Credential Creation Succeeded Duration (seconds)"
+    },
+    {
+      "definition": {
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.GardenContainerCreationFailedDuration{origin:rep} by {job,index,ip}/1000000000",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "Cell Rep: Garden Container Creation Failed Duration (seconds)"
+    },
+    {
+      "definition": {
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.GardenContainerCreationSucceededDuration{origin:rep} by {job,index,ip}/1000000000",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "Cell Rep: Garden Container Creation Succeeded Duration (seconds)"
+    },
+    {
+      "definition": {
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.GardenContainerDestructionFailedDuration{origin:rep} by {job,index,ip}/1000000000",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "Cell Rep: Garden Container Destruction Failed Duration (seconds)"
+    },
+    {
+      "definition": {
+        "requests": [
+          {
+            "q": "avg:datadog.nozzle.GardenContainerDestructionSucceededDuration{origin:rep} by {job,index,ip}/1000000000",
+            "style": {
+              "palette": "dog_classic",
+              "type": "solid",
+              "width": "normal"
+            },
+            "type": "line"
+          }
+        ],
+        "viz": "timeseries"
+      },
+      "title": "Cell Rep: Garden Container Destruction Succeeded Duration (seconds)"
     }
-    <% end %>
-    <% end %>
-  ]
+  ],
+  "new_id": "8ip-4uu-n7h",
+  "read_only": false,
+  "template_variables": [
+
+  ],
+  "title": "<%= environment %> Diego Health"
 }
